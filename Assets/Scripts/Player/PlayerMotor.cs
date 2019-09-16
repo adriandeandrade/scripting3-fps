@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMotor : MonoBehaviour
@@ -12,31 +13,45 @@ public class PlayerMotor : MonoBehaviour
 	[SerializeField] private float runSpeed = 15f;
 
 	[Space]
+	[Header("Input Asset")]
+	[SerializeField] private InputActionAsset playerControls; // Player controls
+
+	[Space]
 	[Header("Movement Configuration")]
 	[SerializeField] private float gravity = 10f;
 	[SerializeField] private float maxVelocityChange = 10f;
-	[SerializeField] private float jumpHeight = 20f;
-	[SerializeField] private float maxDistanceFromWall = 5f;
 	[SerializeField] private Transform groundCheck;
-    [SerializeField] private Transform camTransform;
+	[SerializeField] private Transform camTransform;
 	[SerializeField] private LayerMask groundMask;
 	[SerializeField] private MouseLook mouseLook;
 
-
 	// Private Variables
 	private const float groundedRadius = 0.2f;
+	private float horizontal;
+	private float vertical;
+	private Vector3 direction;
 	private bool isGrounded = true;
 
 	// Components
 	private Rigidbody rBody;
 	private Camera cam;
 
+    // Input Actions
+	private InputAction movement;
+
 	private void Awake()
 	{
+		InitializeInput();
+
 		rBody = GetComponent<Rigidbody>();
 		cam = Camera.main;
 		rBody.freezeRotation = true;
 		rBody.useGravity = false;
+	}
+
+	private void OnEnable()
+	{
+		movement.Enable();
 	}
 
 	private void Start()
@@ -47,7 +62,7 @@ public class PlayerMotor : MonoBehaviour
 
 	private void Update()
 	{
-        RotateView();
+		RotateView();
 	}
 
 	private void FixedUpdate()
@@ -56,15 +71,28 @@ public class PlayerMotor : MonoBehaviour
 		CheckForGround();
 	}
 
+     private void InitializeInput()
+    {
+        InputActionMap playerActionMap = playerControls.GetActionMap("Player");
+        movement = playerActionMap.GetAction("Movement");
+
+        // Subscribe Input Events
+        movement.performed += OnMovementChanged;
+		movement.canceled += OnMovementChanged;
+    }
+
+	private void OnMovementChanged(InputAction.CallbackContext context)
+	{
+		var _direction = context.ReadValue<Vector2>();
+		direction = new Vector3(_direction.x, 0f, _direction.y);
+	}
+
 	private void Movement()
 	{
 		if (isGrounded)
 		{
-			float horizontal = Input.GetAxis("Horizontal");
-			float vertical = Input.GetAxis("Vertical");
-
-			Vector3 targetVelocity = new Vector3(horizontal, 0f, vertical);
-			targetVelocity = transform.TransformDirection(targetVelocity);
+			Vector3 targetVelocity = direction;
+			targetVelocity = transform.TransformDirection(targetVelocity); // Here convert direction to worldspace soo we actually move in the right direction.
 
 			targetVelocity *= walkSpeed;
 
@@ -78,7 +106,8 @@ public class PlayerMotor : MonoBehaviour
 			rBody.AddForce(velocityChange, ForceMode.VelocityChange);
 		}
 
-		rBody.AddForce(new Vector3(0f, -gravity * rBody.mass, 0f));
+		rBody.AddForce(new Vector3(0f, -gravity * rBody.mass, 0f)); // Add gravity
+        mouseLook.UpdateCursorLock();
 	}
 
 	private void CheckForGround()
