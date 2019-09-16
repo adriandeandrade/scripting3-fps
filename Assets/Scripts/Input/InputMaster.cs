@@ -32,6 +32,14 @@ public class InputMaster : IInputActionCollection
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Interaction"",
+                    ""type"": ""Button"",
+                    ""id"": ""566b80fb-bee3-43f2-906f-57a4bce0bac5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -166,6 +174,17 @@ public class InputMaster : IInputActionCollection
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""888ca6f3-6006-4c84-b368-aaef9a031a9e"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Interaction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -204,6 +223,7 @@ public class InputMaster : IInputActionCollection
         m_Player = asset.GetActionMap("Player");
         m_Player_WeaponControls = m_Player.GetAction("Weapon Controls");
         m_Player_Movement = m_Player.GetAction("Movement");
+        m_Player_Interaction = m_Player.GetAction("Interaction");
     }
 
     ~InputMaster()
@@ -255,12 +275,14 @@ public class InputMaster : IInputActionCollection
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_WeaponControls;
     private readonly InputAction m_Player_Movement;
+    private readonly InputAction m_Player_Interaction;
     public struct PlayerActions
     {
         private InputMaster m_Wrapper;
         public PlayerActions(InputMaster wrapper) { m_Wrapper = wrapper; }
         public InputAction @WeaponControls => m_Wrapper.m_Player_WeaponControls;
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
+        public InputAction @Interaction => m_Wrapper.m_Player_Interaction;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -276,6 +298,9 @@ public class InputMaster : IInputActionCollection
                 Movement.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
                 Movement.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
                 Movement.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
+                Interaction.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteraction;
+                Interaction.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteraction;
+                Interaction.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteraction;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -286,6 +311,9 @@ public class InputMaster : IInputActionCollection
                 Movement.started += instance.OnMovement;
                 Movement.performed += instance.OnMovement;
                 Movement.canceled += instance.OnMovement;
+                Interaction.started += instance.OnInteraction;
+                Interaction.performed += instance.OnInteraction;
+                Interaction.canceled += instance.OnInteraction;
             }
         }
     }
@@ -312,5 +340,6 @@ public class InputMaster : IInputActionCollection
     {
         void OnWeaponControls(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
+        void OnInteraction(InputAction.CallbackContext context);
     }
 }

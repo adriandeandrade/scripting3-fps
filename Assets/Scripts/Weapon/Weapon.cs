@@ -1,29 +1,32 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+public abstract class Weapon : MonoBehaviour
 {
 	// Inspector Fields
 	[Header("Weapon Configuration")]
 	[SerializeField] protected WeaponData weaponData;
 	[SerializeField] protected LayerMask ignoreMask;
 
-	private enum WeaponStates { READY, RELOAD, CYCLING, NOAMMO };
-	private WeaponStates weaponState = WeaponStates.READY;
+	protected enum WeaponStates { READY, RELOAD, CYCLING, NOAMMO };
+	protected WeaponStates weaponState = WeaponStates.READY;
 
 	// Private Variables
-	private int bulletsLeftInMagazine;
-	public int bulletsLeftBeforeReload;
-	private float nextFireTime;
+	protected int bulletsLeftInMagazine;
+	protected int bulletsLeftBeforeReload;
+	protected float nextFireTime;
+	protected bool debug;
 
 	// Components
 	protected Camera cam;
-	private Player player;
+	protected Player player;
+	protected Animator animator;
 
 	private void Awake()
 	{
 		cam = Camera.main;
 		player = FindObjectOfType<Player>(); // Get in GameManager and use that as reference to player. [Toolbox.instance.GetGameManager.PlayerRef]
+		animator = GetComponent<Animator>();
 	}
 
 	private void Start()
@@ -63,26 +66,7 @@ public class Weapon : MonoBehaviour
 		}
 	}
 
-	public virtual void ShootRay()
-	{
-		RaycastHit hit;
-
-		Vector3 rayOrigin = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
-		Debug.DrawRay(rayOrigin, cam.transform.forward * 300, Color.green);
-
-		if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, weaponData.fireRange, ignoreMask))
-		{
-            Rigidbody otherRigidBody = hit.collider.GetComponent<Rigidbody>();
-
-            if(otherRigidBody != null)
-            {
-                Vector3 knockbackDirection = otherRigidBody.transform.position - transform.position;
-                otherRigidBody.AddForce(knockbackDirection * 5f, ForceMode.Impulse);
-            }
-
-    		Debug.Log("Object hit: " + hit.collider.name);
-		}
-	}
+	protected abstract void ShootRay();
 
 	public void StartReload()
 	{

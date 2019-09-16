@@ -24,8 +24,23 @@ public class Toolbox : MonoBehaviour
 
 	#endregion
 
+	private InventoryManager inventoryManager;
+	private InputManager inputManager;
+
 	private void Awake()
 	{
-        InitializeSingelon();
+		InitializeSingelon();
+		inventoryManager = gameObject.AddComponent<InventoryManager>();
+		inputManager = gameObject.AddComponent<InputManager>();
+	}
+
+	public InventoryManager GetInventoryManager()
+	{
+		return inventoryManager;
+	}
+
+	public InputManager GetInputManager()
+	{
+		return inputManager;
 	}
 }

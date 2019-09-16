@@ -5,10 +5,6 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-	// Inspector Fields
-	[Header("Input Asset")]
-	[SerializeField] private InputActionAsset playerControls;
-
 	// Private Variables
 	private bool isReloading;
 	private bool isHoldingWeapon;
@@ -18,26 +14,14 @@ public class Player : MonoBehaviour
 	public bool IsReloading { get => isReloading; set => isReloading = value; }
 	public bool IsHoldingWeapon { get => isHoldingWeapon; set => isHoldingWeapon = value; }
 
-	// Input Actions
-	private InputAction weaponControls;
-
-	private void OnEnable()
-	{
-        weaponControls.Enable();
-	}
-
-	private void Awake()
+	private void Start()
 	{
 		InitializeInput();
 	}
 
 	private void InitializeInput()
 	{
-		InputActionMap playerActionMap = playerControls.GetActionMap("Player");
-		weaponControls = playerActionMap.GetAction("Weapon Controls");
-
-		weaponControls.performed += OnShoot;
-		weaponControls.canceled += OnShoot;
+		Toolbox.instance.GetInputManager().weaponControls.performed += OnShoot;
 	}
 
 	private void OnShoot(InputAction.CallbackContext context)

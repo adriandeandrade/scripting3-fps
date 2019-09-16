@@ -13,10 +13,6 @@ public class PlayerMotor : MonoBehaviour
 	[SerializeField] private float runSpeed = 15f;
 
 	[Space]
-	[Header("Input Asset")]
-	[SerializeField] private InputActionAsset playerControls; // Player controls
-
-	[Space]
 	[Header("Movement Configuration")]
 	[SerializeField] private float gravity = 10f;
 	[SerializeField] private float maxVelocityChange = 10f;
@@ -36,28 +32,21 @@ public class PlayerMotor : MonoBehaviour
 	private Rigidbody rBody;
 	private Camera cam;
 
-    // Input Actions
-	private InputAction movement;
-
 	private void Awake()
 	{
-		InitializeInput();
-
 		rBody = GetComponent<Rigidbody>();
 		cam = Camera.main;
 		rBody.freezeRotation = true;
 		rBody.useGravity = false;
 	}
 
-	private void OnEnable()
-	{
-		movement.Enable();
-	}
 
 	private void Start()
 	{
 		mouseLook = new MouseLook();
 		mouseLook.Init(transform, cam.transform);
+
+		InitializeInput();
 	}
 
 	private void Update()
@@ -73,12 +62,9 @@ public class PlayerMotor : MonoBehaviour
 
      private void InitializeInput()
     {
-        InputActionMap playerActionMap = playerControls.GetActionMap("Player");
-        movement = playerActionMap.GetAction("Movement");
-
         // Subscribe Input Events
-        movement.performed += OnMovementChanged;
-		movement.canceled += OnMovementChanged;
+		Toolbox.instance.GetInputManager().movementControls.performed += OnMovementChanged;
+        Toolbox.instance.GetInputManager().movementControls.canceled += OnMovementChanged;
     }
 
 	private void OnMovementChanged(InputAction.CallbackContext context)

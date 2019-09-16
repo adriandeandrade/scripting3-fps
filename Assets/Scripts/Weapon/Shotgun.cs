@@ -7,11 +7,10 @@ public class Shotgun : Weapon
 	[Header("Shotgun Configuration")]
 	[SerializeField] private int bearingCount = 6;
 	[SerializeField] private float spreadRadius;
-	[SerializeField] private float z = 10f;
+	[SerializeField] private float spreadDepth = 10f; // The height of the radius cone.
 	[SerializeField] private GameObject debugObject;
-	[SerializeField] private bool debug;
 
-	public override void ShootRay()
+	protected override void ShootRay()
 	{
 		RaycastHit hit;
 		List<GameObject> objectsHit = new List<GameObject>();
@@ -21,8 +20,13 @@ public class Shotgun : Weapon
 		for (int i = 0; i < bearingCount; i++)
 		{
 			Vector3 direction = Random.insideUnitCircle * spreadRadius;
-			direction.z = z;
+			direction.z = spreadDepth;
 			direction = transform.TransformDirection(direction.normalized);
+
+			if (debug)
+			{
+				Debug.DrawRay(rayOrigin, cam.transform.forward * 300, Color.green);
+			}
 
 			if (Physics.Raycast(rayOrigin, direction, out hit, weaponData.fireRange, ignoreMask))
 			{
@@ -33,6 +37,7 @@ public class Shotgun : Weapon
 
 				objectsHit.Add(hit.collider.gameObject);
 				Debug.Log("Object hit: " + hit.collider.name);
+
 			}
 		}
 
@@ -46,5 +51,7 @@ public class Shotgun : Weapon
 				otherRigidBody.AddForce(knockbackDirection * 0.5f, ForceMode.Impulse);
 			}
 		}
+
+        animator.SetTrigger("Shoot");
 	}
 }

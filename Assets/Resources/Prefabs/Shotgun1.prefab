@@ -9,8 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4060768854090274668}
+  - component: {fileID: 1465484631}
   m_Layer: 0
-  m_Name: BoltActionRifle
+  m_Name: Shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,12 +26,35 @@ Transform:
   m_GameObject: {fileID: 4060768854090274669}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.52, y: 0.781, z: 4.445}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 4060768855763339617}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1465484631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4060768854090274669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c451def2530c32a4881fa651b53196d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponData: {fileID: 11400000, guid: 3899d0cf4e9891f48a015d58a6e11841, type: 2}
+  ignoreMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  bulletsLeftBeforeReload: 0
+  bearingCount: 6
+  spreadRadius: 0.5
+  z: 10
+  debugObject: {fileID: 4550591919202616762, guid: 5b985b0592ac84a48b9332d2a1f7ca29,
+    type: 3}
+  debug: 1
 --- !u!1 &4060768854578559076
 GameObject:
   m_ObjectHideFlags: 0
@@ -1358,7 +1382,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
 --- !u!1 &4060768855763339614
