@@ -36,7 +36,7 @@ public class Shotgun : Weapon
 				}
 
 				objectsHit.Add(hit.collider.gameObject);
-				Debug.Log("Object hit: " + hit.collider.name);
+				//Debug.Log("Object hit: " + hit.collider.name);
 
 			}
 		}

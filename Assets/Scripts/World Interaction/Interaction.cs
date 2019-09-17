@@ -17,7 +17,6 @@ public class Interaction : MonoBehaviour
 	// Componenets
 	private Camera cam;
 
-
 	private void InitializeInput()
 	{
 		Toolbox.instance.GetInputManager().interactionControls.performed += OnInteract;
@@ -90,7 +89,7 @@ public class Interaction : MonoBehaviour
 
 	private float GetDistance(Vector3 objectPos)
 	{
-		return Vector3.Distance(transform.position, objectPos);
+		return Vector3.Distance(transform.position, objectPos); ;
 	}
 
 }

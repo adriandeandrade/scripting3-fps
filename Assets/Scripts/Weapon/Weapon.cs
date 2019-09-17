@@ -50,7 +50,7 @@ public abstract class Weapon : MonoBehaviour
 			ShootRay();
 			bulletsLeftInMagazine--;
 			nextFireTime = Time.time + weaponData.fireRate;
-			Debug.Log("Shot weapon");
+			//Debug.Log("Shot weapon");
 		}
 	}
 
