@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DG.Tweening;
 
 public class Player : MonoBehaviour
 {
@@ -9,10 +10,17 @@ public class Player : MonoBehaviour
 	private bool isReloading;
 	private bool isHoldingWeapon;
 
-    [SerializeField] private Weapon currentWeapon;
+	[SerializeField] private Weapon currentWeapon;
+
+	private Camera cam;
 
 	public bool IsReloading { get => isReloading; set => isReloading = value; }
 	public bool IsHoldingWeapon { get => isHoldingWeapon; set => isHoldingWeapon = value; }
+
+	private void Awake()
+	{
+		cam = Camera.main;
+	}
 
 	private void Start()
 	{
@@ -25,8 +33,11 @@ public class Player : MonoBehaviour
 	}
 
 	private void OnShoot(InputAction.CallbackContext context)
-	{
-        currentWeapon.Shoot();
-        Debug.Log("Shot");
+	{	
+		cam.transform.DOComplete();
+		cam.transform.DOShakePosition(.1f, .1f, 10, 90, false, true);
+
+		currentWeapon.Shoot();
+		Debug.Log("Shot");
 	}
 }

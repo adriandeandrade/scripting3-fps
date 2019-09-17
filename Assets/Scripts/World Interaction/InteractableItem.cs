@@ -7,7 +7,7 @@ public class InteractableItem : Interactable
 {
 	// Inspector Fields
 	[Header("Interactable Item Data")]
-	[SerializeField] private Item item;
+	[SerializeField] protected Item item;
 
 	// Components
 	private TextMeshProUGUI itemNameText;
@@ -26,6 +26,7 @@ public class InteractableItem : Interactable
 	public override void Interact()
 	{
 		HandleItem(item);
+		Destroy(gameObject);
 	}
 
 	private void HandleItem(Item _item)

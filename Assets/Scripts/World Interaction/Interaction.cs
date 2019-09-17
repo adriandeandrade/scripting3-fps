@@ -40,7 +40,7 @@ public class Interaction : MonoBehaviour
 			if (lastItemInteracted != null)
 			{
 				lastItemInteracted.Interact();
-				lastItemInteracted.DeactivateInteractionUI();
+				//lastItemInteracted.DeactivateInteractionUI();
 				lastItemInteracted = null;
 			}
 		}
@@ -55,7 +55,7 @@ public class Interaction : MonoBehaviour
 	{
 		if (lastItemInteracted != null)
 		{
-			lastItemInteracted.DeactivateInteractionUI();
+			//lastItemInteracted.DeactivateInteractionUI();
 			lastItemInteracted = null;
 		}
 
@@ -75,12 +75,12 @@ public class Interaction : MonoBehaviour
 					if (distanceToObject <= maxInteractionDistance)
 					{
 						canInteract = true;
-						lastItemInteracted.ActivateInteractionUI();
+						//lastItemInteracted.ActivateInteractionUI();
 					}
 					else
 					{
 						canInteract = false;
-						lastItemInteracted.DeactivateInteractionUI();
+						//lastItemInteracted.DeactivateInteractionUI();
 						lastItemInteracted = null;
 					}
 				}
