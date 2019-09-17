@@ -178,7 +178,7 @@ public class InputMaster : IInputActionCollection
                 {
                     ""name"": """",
                     ""id"": ""888ca6f3-6006-4c84-b368-aaef9a031a9e"",
-                    ""path"": ""<Keyboard>/f"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard and Mouse"",

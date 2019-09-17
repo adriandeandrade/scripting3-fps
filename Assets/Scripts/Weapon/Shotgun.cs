@@ -30,6 +30,13 @@ public class Shotgun : Weapon
 
 			if (Physics.Raycast(rayOrigin, direction, out hit, weaponData.fireRange, ignoreMask))
 			{
+				IDamageable damageable = hit.collider.GetComponent<IDamageable>();
+
+				if(damageable != null)
+				{
+					damageable.TakeDamage(2f / bearingCount);
+				}
+
 				if (debug)
 				{
 					Instantiate(debugObject, hit.point, Quaternion.identity);

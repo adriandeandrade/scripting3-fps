@@ -39,6 +39,7 @@ public class Interaction : MonoBehaviour
 			if (lastItemInteracted != null)
 			{
 				lastItemInteracted.Interact();
+				Toolbox.instance.GetCrosshairController().ShowCrosshair();
 				//lastItemInteracted.DeactivateInteractionUI();
 				lastItemInteracted = null;
 			}
@@ -54,7 +55,7 @@ public class Interaction : MonoBehaviour
 	{
 		if (lastItemInteracted != null)
 		{
-			//lastItemInteracted.DeactivateInteractionUI();
+			Toolbox.instance.GetCrosshairController().ShowCrosshair();
 			lastItemInteracted = null;
 		}
 
@@ -74,16 +75,20 @@ public class Interaction : MonoBehaviour
 					if (distanceToObject <= maxInteractionDistance)
 					{
 						canInteract = true;
-						//lastItemInteracted.ActivateInteractionUI();
+						Toolbox.instance.GetCrosshairController().ShowInteractionIcon();
 					}
 					else
 					{
 						canInteract = false;
-						//lastItemInteracted.DeactivateInteractionUI();
+						Toolbox.instance.GetCrosshairController().ShowCrosshair();
 						lastItemInteracted = null;
 					}
 				}
 			}
+		}
+		else
+		{
+			Toolbox.instance.GetCrosshairController().ShowCrosshair();
 		}
 	}
 

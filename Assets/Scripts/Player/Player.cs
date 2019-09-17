@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
 
-public class Player : MonoBehaviour
+public class Player : BaseDamageable
 {
 	// Private Variables
 	private bool isReloading;
@@ -22,8 +22,9 @@ public class Player : MonoBehaviour
 		cam = Camera.main;
 	}
 
-	private void Start()
+	protected override void Start()
 	{
+		base.Start();
 		InitializeInput();
 	}
 

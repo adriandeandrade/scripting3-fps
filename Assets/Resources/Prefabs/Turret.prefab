@@ -10,6 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2956071967054343381}
   - component: {fileID: 978598238415732046}
+  - component: {fileID: 4299911162023057817}
+  - component: {fileID: 6187718339960898915}
+  - component: {fileID: 4557597027543674532}
   m_Layer: 0
   m_Name: Turret
   m_TagString: Untagged
@@ -45,12 +48,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54ba79fd814cc0e47b08c9b267046a32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startHealth: 10
   rotateSpeed: 50
   maxAttackDistance: 10
   fireRate: 2
+  fireDelay: 1
   firePoint: {fileID: 4601443694902586321}
   partToRotate: {fileID: 1691289974809729588}
   gun: {fileID: 7707275286483437682}
+--- !u!65 &4299911162023057817
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2260044029873184454}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2.5946507, z: 1}
+  m_Center: {x: 0, y: 0.7973254, z: 0}
+--- !u!65 &6187718339960898915
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2260044029873184454}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.8674264, z: 2.5101666}
+  m_Center: {x: 0, y: 2.5766075, z: -0.61681414}
+--- !u!65 &4557597027543674532
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2260044029873184454}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.9814444, y: 0.80638885, z: 5.0120487}
+  m_Center: {x: 0.020680904, y: 0.40873432, z: -0.0053772926}
 --- !u!1 &3284312612770713684
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,6 +136,7 @@ GameObject:
   - component: {fileID: 7707275286483437682}
   - component: {fileID: 2560125273950700771}
   - component: {fileID: 2233684968456721784}
+  - component: {fileID: 3100018082729031468}
   m_Layer: 0
   m_Name: Turret_Gun
   m_TagString: Untagged
@@ -161,6 +206,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!136 &3100018082729031468
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4671704096871919451}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5891229
+  m_Height: 2.9539273
+  m_Direction: 2
+  m_Center: {x: 0.05796635, y: 0.4363382, z: 0.69613135}
 --- !u!1 &5087997806610374458
 GameObject:
   m_ObjectHideFlags: 0
@@ -172,6 +231,7 @@ GameObject:
   - component: {fileID: 1691289974809729588}
   - component: {fileID: 4071201691852014724}
   - component: {fileID: 1731395741526491573}
+  - component: {fileID: 2343012505781400303}
   m_Layer: 0
   m_Name: Turret_Rotator
   m_TagString: Untagged
@@ -241,6 +301,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!136 &2343012505781400303
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5087997806610374458}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.31232983
+  m_Height: 1.7633356
+  m_Direction: 1
+  m_Center: {x: 0.00063453615, y: 0.66733986, z: 0.0034618825}
 --- !u!1 &7627671112450898564
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,6 +326,7 @@ GameObject:
   - component: {fileID: 854597629576489366}
   - component: {fileID: 7213348497809453352}
   - component: {fileID: 2355268457076537469}
+  - component: {fileID: 8541035444934798451}
   m_Layer: 0
   m_Name: Turret_Base
   m_TagString: Untagged
@@ -320,3 +395,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &8541035444934798451
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7627671112450898564}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5.000757, y: 0.8127846, z: 5.000757}
+  m_Center: {x: 0, y: 0.41890177, z: 0}

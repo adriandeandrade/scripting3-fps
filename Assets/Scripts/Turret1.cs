@@ -7,13 +7,14 @@ public enum TurretStates
 	Idle, Rotating, Engaging
 }
 
-public class Turret1 : MonoBehaviour
+public class Turret1 : BaseDamageable
 {
 	// Inspector Fields
 	[Header("Turret Configuration")]
 	[SerializeField] private float rotateSpeed = 100f;
 	[SerializeField] private float maxAttackDistance = 20f;
 	[SerializeField] private float fireRate;
+	[SerializeField] private float fireDelay = 1f;
 	[SerializeField] private Transform firePoint;
 	[SerializeField] private Transform partToRotate;
 	[SerializeField] private Transform gun;
@@ -21,6 +22,7 @@ public class Turret1 : MonoBehaviour
 	// Private Variables
 	private bool canSeePlayer;
 	private float nextFireTime;
+	private float currentFireDelay;
 	private TurretStates currentState;
 	private Color originalColor;
 
@@ -35,8 +37,10 @@ public class Turret1 : MonoBehaviour
 		originalColor = gunMr.material.GetColor("_BaseColor");
 	}
 
-	private void Start()
+	protected override void Start()
 	{
+		base.Start();
+
 		currentState = TurretStates.Idle;
 		nextFireTime = Time.time + fireRate;
 	}
@@ -53,14 +57,17 @@ public class Turret1 : MonoBehaviour
 		{
 			case TurretStates.Idle:
 				currentState = TurretStates.Idle;
+				InitIdleState();
 				break;
 
 			case TurretStates.Engaging:
 				currentState = TurretStates.Engaging;
+				InitEngagingState();
 				break;
 
 			case TurretStates.Rotating:
 				currentState = TurretStates.Rotating;
+				InitRotatingState();
 				break;
 		}
 	}
@@ -83,8 +90,6 @@ public class Turret1 : MonoBehaviour
 		}
 	}
 
-
-
 	private void InitIdleState()
 	{
 
@@ -92,7 +97,7 @@ public class Turret1 : MonoBehaviour
 
 	private void InitEngagingState()
 	{
-
+		currentFireDelay = fireDelay;
 	}
 
 	private void InitRotatingState()
@@ -102,7 +107,7 @@ public class Turret1 : MonoBehaviour
 
 	private void UpdateIdleState()
 	{
-		if (CheckDistanceFromTarget() <= maxAttackDistance)
+		if (CheckDistanceToTarget())
 		{
 			SetState(TurretStates.Rotating);
 		}
@@ -110,9 +115,9 @@ public class Turret1 : MonoBehaviour
 
 	private void UpdateEngagingState()
 	{
-		if (CheckDistanceFromTarget() <= maxAttackDistance)
+		if (CheckDistanceAndCanSeeTarget())
 		{
-			if (canSeePlayer)
+			if (currentFireDelay <= 0)
 			{
 				if (Time.time > nextFireTime)
 				{
@@ -121,7 +126,7 @@ public class Turret1 : MonoBehaviour
 			}
 			else
 			{
-				SetState(TurretStates.Idle);
+				currentFireDelay -= Time.deltaTime;
 			}
 		}
 		else
@@ -135,12 +140,9 @@ public class Turret1 : MonoBehaviour
 		RotateTurret();
 		RotateGun();
 
-		if (CheckDistanceFromTarget() <= maxAttackDistance)
+		if (CheckDistanceAndCanSeeTarget())
 		{
-			if (canSeePlayer)
-			{
-				SetState(TurretStates.Engaging);
-			}
+			SetState(TurretStates.Engaging);
 		}
 		else
 		{
@@ -164,7 +166,7 @@ public class Turret1 : MonoBehaviour
 	private void ShootDamageRay()
 	{
 		RaycastHit hit;
-		if (Physics.Raycast(firePoint.position, firePoint.forward, out hit, Mathf.Infinity))
+		if (Physics.Raycast(firePoint.position, firePoint.forward, out hit, maxAttackDistance))
 		{
 			if (hit.collider != null)
 			{
@@ -172,7 +174,7 @@ public class Turret1 : MonoBehaviour
 
 				if (player != null)
 				{
-					Debug.Log("Player took damage");
+					hit.collider.GetComponent<IDamageable>().TakeDamage(2f);
 				}
 				else
 				{
@@ -226,8 +228,21 @@ public class Turret1 : MonoBehaviour
 		}
 	}
 
-	private float CheckDistanceFromTarget()
+	private float GetDistanceToTarget()
 	{
 		return Vector3.Distance(target.transform.position, transform.position);
+	}
+
+	private bool CheckDistanceAndCanSeeTarget()
+	{
+		if (GetDistanceToTarget() <= maxAttackDistance && canSeePlayer)
+			return true;
+		else
+			return false;
+	}
+
+	private bool CheckDistanceToTarget()
+	{
+		return GetDistanceToTarget() <= maxAttackDistance;
 	}
 }
