@@ -1,19 +1,9 @@
 fileFormatVersion: 2
-guid: 21f01400573ea234abc0d783e6314cf3
+guid: 57f32eabb87658141b2bfa040097eaab
 ModelImporter:
   serializedVersion: 28
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: mat_shotgun_base
-    second: {fileID: 2100000, guid: 7b83a58e2943df44399ce83c29722f35, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: mat_shotgun_pump
-    second: {fileID: 2100000, guid: 9e90b24f48975b446aa89c1f25a688f0, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -78,7 +68,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 0
+  importAnimation: 1
   humanDescription:
     serializedVersion: 3
     human: []
@@ -93,10 +83,10 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 1
+    hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   avatarSetup: 0
   additionalBone: 0

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 21f01400573ea234abc0d783e6314cf3
+guid: 4c94e88db61c03b46951f772683c9e1e
 ModelImporter:
   serializedVersion: 28
   internalIDToNameTable: []
@@ -7,13 +7,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: mat_shotgun_base
-    second: {fileID: 2100000, guid: 7b83a58e2943df44399ce83c29722f35, type: 2}
+      name: mat_turret_base
+    second: {fileID: 2100000, guid: d7f9686b3e916f549abec1a163a874e3, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: mat_shotgun_pump
-    second: {fileID: 2100000, guid: 9e90b24f48975b446aa89c1f25a688f0, type: 2}
+      name: mat_turret_head
+    second: {fileID: 2100000, guid: ba4585a232c0eba4aae6a1c9fb47f138, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mat_turret_rotator
+    second: {fileID: 2100000, guid: 772387b98690f9a4b81a2e6b0194b6dd, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
