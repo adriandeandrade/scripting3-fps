@@ -8,20 +8,7 @@ public class InteractableItem : Interactable
 	// Inspector Fields
 	[Header("Interactable Item Data")]
 	[SerializeField] protected Item item;
-
-	// Components
-	private TextMeshProUGUI itemNameText;
-
-	private void Awake()
-	{
-		itemNameText = GetComponentInChildren<TextMeshProUGUI>();
-	}
-
-	private void Start()
-	{
-		itemNameText.SetText(item.itemName);
-		DeactivateInteractionUI();
-	}
+	[SerializeField] protected int stackSize;
 
 	public override void Interact()
 	{
@@ -31,7 +18,7 @@ public class InteractableItem : Interactable
 
 	private void HandleItem(Item _item)
 	{
-		Toolbox.instance.GetInventoryManager().inventory.AddItem(item, 1);
+		Toolbox.instance.GetInventoryManager().inventory.AddItem(item, stackSize);
 	}
 
 	public override void ActivateInteractionUI()
@@ -41,7 +28,6 @@ public class InteractableItem : Interactable
 		if (!activeUI)
 		{
 			activeUI = true;
-			itemNameText.enabled = true;
 		}
 	}
 
@@ -52,7 +38,6 @@ public class InteractableItem : Interactable
 		if (activeUI)
 		{
 			activeUI = false;
-			itemNameText.enabled = false;
 		}
 	}
 }
