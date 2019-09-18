@@ -1,4 +1,4 @@
 ﻿public enum ItemTypes
 {
-    Keycard, Consumable    
+    Keycard, Consumable, Ammo 
 }

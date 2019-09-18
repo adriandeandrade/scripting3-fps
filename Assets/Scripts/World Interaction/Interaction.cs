@@ -40,7 +40,6 @@ public class Interaction : MonoBehaviour
 			{
 				lastItemInteracted.Interact();
 				Toolbox.instance.GetCrosshairController().ShowCrosshair();
-				//lastItemInteracted.DeactivateInteractionUI();
 				lastItemInteracted = null;
 			}
 		}

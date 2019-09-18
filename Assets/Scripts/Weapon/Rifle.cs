@@ -21,6 +21,8 @@ public class Rifle : Weapon
                 otherRigidBody.AddForceAtPosition(knockbackDirection * 5f, hit.point, ForceMode.Impulse);
             }
 
+            SpawnBulletHole(hit);
+
     		Debug.Log("Object hit: " + hit.collider.name);
 		}
     }

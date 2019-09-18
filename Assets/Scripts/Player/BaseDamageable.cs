@@ -6,19 +6,28 @@ public class BaseDamageable : MonoBehaviour, IDamageable
 {
 	// Inspector Fields
 	[Header("Damageable Configuration")]
-	[SerializeField] private float startHealth;
+	[SerializeField] protected float startHealth;
+	[SerializeField] protected MeshRenderer mr;
+    [SerializeField] protected Color damageColor;
 
 	// Private Variables
-	private float currentHealth;
+	protected float currentHealth;
+    protected Color originalColor;
+
+	protected virtual void Awake()
+	{
+        originalColor = mr.material.GetColor("_BaseColor");
+	}
 
 	protected virtual void Start()
 	{
-        currentHealth = startHealth;
+		currentHealth = startHealth;
 	}
 
 	public void TakeDamage(float amount)
 	{
 		RecalculateHealth(amount);
+        StartCoroutine(OnTakeDamage());
 
 		if (currentHealth <= 0)
 		{
@@ -37,4 +46,12 @@ public class BaseDamageable : MonoBehaviour, IDamageable
 	{
 		Destroy(gameObject);
 	}
+
+    IEnumerator OnTakeDamage()
+    {
+        mr.material.SetColor("_BaseColor", damageColor);
+        yield return new WaitForSeconds(0.5f);
+        mr.material.SetColor("_BaseColor", originalColor);
+        yield break;
+    }
 }

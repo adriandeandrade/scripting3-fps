@@ -28,7 +28,7 @@ public class Inventory : MonoBehaviour
 		{
 			itemDict[itemToRemove] -= amountToRemove;
 
-			int amountLeft = itemDict[itemToRemove];
+			int amountLeft = GetCurrentAmount(itemToRemove);
 			if (amountLeft <= 0)
 			{
 				itemDict.Remove(itemToRemove);
@@ -55,7 +55,7 @@ public class Inventory : MonoBehaviour
 	{
 		if (CheckIfItemExists(itemToCheck))
 		{
-			int amount = itemDict[itemToCheck];
+			int amount = GetCurrentAmount(itemToCheck);
 			return amount;
 		}
 		else
@@ -74,6 +74,12 @@ public class Inventory : MonoBehaviour
 		{
 			return false;
 		}
+	}
+
+	public int GetCurrentAmount(Item itemToCheck)
+	{
+		int amountLeft = itemDict[itemToCheck];
+		return amountLeft;
 	}
 
 	[ContextMenu("Print Inventory")]

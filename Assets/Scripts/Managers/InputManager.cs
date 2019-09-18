@@ -12,12 +12,14 @@ public class InputManager : MonoBehaviour
 	public InputAction interactionControls;
 	public InputAction movementControls;
 	public InputAction weaponControls;
+	public InputAction cycleWeaponControls;
 
 	private void OnEnable()
 	{
 		interactionControls.Enable();
 		movementControls.Enable();
 		weaponControls.Enable();
+		cycleWeaponControls.Enable();
 	}
 
 	private void OnDisable()
@@ -25,6 +27,7 @@ public class InputManager : MonoBehaviour
         interactionControls.Disable();
 		movementControls.Disable();
 		weaponControls.Disable();
+		cycleWeaponControls.Disable();
 	}
 
 	private void Awake()
@@ -40,5 +43,6 @@ public class InputManager : MonoBehaviour
         interactionControls = playerActionMap.GetAction("Interaction");
 		movementControls = playerActionMap.GetAction("Movement");
 		weaponControls = playerActionMap.GetAction("Weapon Controls");
+		cycleWeaponControls = playerActionMap.GetAction("Inventory Controls");
 	}
 }

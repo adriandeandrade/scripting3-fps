@@ -24,17 +24,17 @@ public class Turret1 : BaseDamageable
 	private float nextFireTime;
 	private float currentFireDelay;
 	private TurretStates currentState;
-	private Color originalColor;
 
 	// Components
 	private Player target;
 	private MeshRenderer gunMr;
 
-	private void Awake()
+	protected override void Awake()
 	{
+		base.Awake();
+
 		target = FindObjectOfType<Player>();
 		gunMr = gun.GetComponent<MeshRenderer>();
-		originalColor = gunMr.material.GetColor("_BaseColor");
 	}
 
 	protected override void Start()
