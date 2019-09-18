@@ -17,7 +17,6 @@ public class Interaction : MonoBehaviour
 	// Componenets
 	private Camera cam;
 
-
 	private void InitializeInput()
 	{
 		Toolbox.instance.GetInputManager().interactionControls.performed += OnInteract;
@@ -40,7 +39,7 @@ public class Interaction : MonoBehaviour
 			if (lastItemInteracted != null)
 			{
 				lastItemInteracted.Interact();
-				//lastItemInteracted.DeactivateInteractionUI();
+				Toolbox.instance.GetCrosshairController().ShowCrosshair();
 				lastItemInteracted = null;
 			}
 		}
@@ -55,7 +54,7 @@ public class Interaction : MonoBehaviour
 	{
 		if (lastItemInteracted != null)
 		{
-			//lastItemInteracted.DeactivateInteractionUI();
+			Toolbox.instance.GetCrosshairController().ShowCrosshair();
 			lastItemInteracted = null;
 		}
 
@@ -75,22 +74,26 @@ public class Interaction : MonoBehaviour
 					if (distanceToObject <= maxInteractionDistance)
 					{
 						canInteract = true;
-						//lastItemInteracted.ActivateInteractionUI();
+						Toolbox.instance.GetCrosshairController().ShowInteractionIcon();
 					}
 					else
 					{
 						canInteract = false;
-						//lastItemInteracted.DeactivateInteractionUI();
+						Toolbox.instance.GetCrosshairController().ShowCrosshair();
 						lastItemInteracted = null;
 					}
 				}
 			}
 		}
+		else
+		{
+			Toolbox.instance.GetCrosshairController().ShowCrosshair();
+		}
 	}
 
 	private float GetDistance(Vector3 objectPos)
 	{
-		return Vector3.Distance(transform.position, objectPos);
+		return Vector3.Distance(transform.position, objectPos); ;
 	}
 
 }

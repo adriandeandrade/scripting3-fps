@@ -10,9 +10,15 @@ public class Shotgun : Weapon
 	[SerializeField] private float spreadDepth = 10f; // The height of the radius cone.
 	[SerializeField] private GameObject debugObject;
 
+	protected override void Start()
+	{
+		base.Start();
+	}
+
 	protected override void ShootRay()
 	{
 		RaycastHit hit;
+		List<RaycastHit> hitPoints = new List<RaycastHit>();
 		List<GameObject> objectsHit = new List<GameObject>();
 
 		Vector3 rayOrigin = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0f));
@@ -30,13 +36,21 @@ public class Shotgun : Weapon
 
 			if (Physics.Raycast(rayOrigin, direction, out hit, weaponData.fireRange, ignoreMask))
 			{
+				IDamageable damageable = hit.collider.GetComponent<IDamageable>();
+
+				if (damageable != null)
+				{
+					damageable.TakeDamage(weaponData.damageAmount / bearingCount);
+				}
+
 				if (debug)
 				{
 					Instantiate(debugObject, hit.point, Quaternion.identity);
 				}
 
 				objectsHit.Add(hit.collider.gameObject);
-				Debug.Log("Object hit: " + hit.collider.name);
+				hitPoints.Add(hit);
+				//Debug.Log("Object hit: " + hit.collider.name);
 
 			}
 		}
@@ -52,6 +66,13 @@ public class Shotgun : Weapon
 			}
 		}
 
-        animator.SetTrigger("Shoot");
+		SpawnBulletHole(hitPoints);
+
+		animator.SetTrigger("Shoot");
+	}
+
+	public void OnPumpAnimationFinished()
+	{
+		canShoot = true;
 	}
 }

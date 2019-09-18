@@ -4,40 +4,68 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
 
-public class Player : MonoBehaviour
+public class Player : BaseDamageable
 {
+	// Inspector Fields
+	[Header("Player Configuration")]
+	[SerializeField] private List<Weapon> weapons = new List<Weapon>();
+	[SerializeField] private Weapon currentWeapon;
+	[SerializeField] private Weapon otherWeapon;
+	
 	// Private Variables
 	private bool isReloading;
 	private bool isHoldingWeapon;
 
-	[SerializeField] private Weapon currentWeapon;
 
+	// Components
 	private Camera cam;
 
 	public bool IsReloading { get => isReloading; set => isReloading = value; }
 	public bool IsHoldingWeapon { get => isHoldingWeapon; set => isHoldingWeapon = value; }
 
-	private void Awake()
+	protected override void Awake()
 	{
+		base.Awake();
 		cam = Camera.main;
 	}
 
-	private void Start()
+	protected override void Start()
 	{
+		base.Start();
 		InitializeInput();
+
+		currentWeapon = weapons[0];
+		currentWeapon.gameObject.SetActive(true);
+
+		otherWeapon = weapons[1];
+		otherWeapon.gameObject.SetActive(false);
+	}
+
+	private void CycleWeapons(InputAction.CallbackContext context)
+	{
+		if(CanCycleWeapons())
+		{
+			Weapon oldWeapon = currentWeapon;
+			oldWeapon.gameObject.SetActive(false);
+			currentWeapon = otherWeapon;
+			otherWeapon = oldWeapon;
+			currentWeapon.gameObject.SetActive(true);
+		}
+	}
+
+	private bool CanCycleWeapons()
+	{
+		return weapons.Count > 1;
 	}
 
 	private void InitializeInput()
 	{
 		Toolbox.instance.GetInputManager().weaponControls.performed += OnShoot;
+		Toolbox.instance.GetInputManager().cycleWeaponControls.performed += CycleWeapons;
 	}
 
 	private void OnShoot(InputAction.CallbackContext context)
 	{	
-		cam.transform.DOComplete();
-		cam.transform.DOShakePosition(.1f, .1f, 10, 90, false, true);
-
 		currentWeapon.Shoot();
-		Debug.Log("Shot");
 	}
 }

@@ -14,13 +14,13 @@ public class InteractableItem : Interactable
 
 	private void Awake()
 	{
-        itemNameText = GetComponentInChildren<TextMeshProUGUI>();
+		itemNameText = GetComponentInChildren<TextMeshProUGUI>();
 	}
 
 	private void Start()
 	{
 		itemNameText.SetText(item.itemName);
-        DeactivateInteractionUI();
+		DeactivateInteractionUI();
 	}
 
 	public override void Interact()
@@ -36,6 +36,8 @@ public class InteractableItem : Interactable
 
 	public override void ActivateInteractionUI()
 	{
+		if (!hasInteractionUI) return;
+
 		if (!activeUI)
 		{
 			activeUI = true;
@@ -45,6 +47,8 @@ public class InteractableItem : Interactable
 
 	public override void DeactivateInteractionUI()
 	{
+		if (!hasInteractionUI) return;
+
 		if (activeUI)
 		{
 			activeUI = false;

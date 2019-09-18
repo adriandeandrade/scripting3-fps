@@ -19,6 +19,10 @@ public class PlayerMotor : MonoBehaviour
 	[SerializeField] private Transform groundCheck;
 	[SerializeField] private Transform camTransform;
 	[SerializeField] private LayerMask groundMask;
+
+	[Header("Mouse Configuration")]
+	[SerializeField] private float horizontalSensitivity;
+	[SerializeField] private float verticalSensitivity;
 	[SerializeField] private MouseLook mouseLook;
 
 	// Private Variables
@@ -45,6 +49,8 @@ public class PlayerMotor : MonoBehaviour
 	{
 		mouseLook = new MouseLook();
 		mouseLook.Init(transform, cam.transform);
+		mouseLook.XSensitivity = horizontalSensitivity;
+		mouseLook.YSensitivity = verticalSensitivity;
 
 		InitializeInput();
 	}
@@ -78,9 +84,9 @@ public class PlayerMotor : MonoBehaviour
 		if (isGrounded)
 		{
 			Vector3 targetVelocity = direction;
-			targetVelocity = transform.TransformDirection(targetVelocity); // Here convert direction to worldspace soo we actually move in the right direction.
+			targetVelocity = transform.TransformDirection(targetVelocity); // Here convert direction to worldspace so we actually move in the right direction.
 
-			targetVelocity *= walkSpeed;
+			targetVelocity *= walkSpeed;	
 
 			Vector3 velocity = rBody.velocity;
 			Vector3 velocityChange = (targetVelocity - velocity);

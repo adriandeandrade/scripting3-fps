@@ -25,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1882802619462015191}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.009, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
@@ -49,12 +49,11 @@ MonoBehaviour:
   ignoreMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  bearingCount: 6
-  spreadRadius: 0.5
+  bearingCount: 15
+  spreadRadius: 0.8
   spreadDepth: 10
   debugObject: {fileID: 4550591919202616762, guid: 5b985b0592ac84a48b9332d2a1f7ca29,
     type: 3}
-  debug: 1
 --- !u!95 &1257922724245081960
 Animator:
   serializedVersion: 3
@@ -81,11 +80,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1882802619462015190}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: 21f01400573ea234abc0d783e6314cf3,
-        type: 3}
-      propertyPath: m_Name
-      value: shotgun
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 21f01400573ea234abc0d783e6314cf3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -140,6 +134,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 21f01400573ea234abc0d783e6314cf3,
+        type: 3}
+      propertyPath: m_Name
+      value: shotgun
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21f01400573ea234abc0d783e6314cf3, type: 3}

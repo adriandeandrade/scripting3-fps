@@ -28,6 +28,14 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Inventory Controls",
+                    "type": "Button",
+                    "id": "a8ed2059-6245-43a7-97a0-53f390a775c6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -166,11 +174,22 @@
                 {
                     "name": "",
                     "id": "888ca6f3-6006-4c84-b368-aaef9a031a9e",
-                    "path": "<Keyboard>/f",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard and Mouse",
                     "action": "Interaction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8bc32b66-51f9-42b5-81fd-a19dd6041c37",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "Inventory Controls",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

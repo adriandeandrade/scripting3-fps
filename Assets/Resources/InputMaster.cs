@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Scripts/Input/InputMaster.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Resources/InputMaster.inputactions'
 
 using System.Collections;
 using System.Collections.Generic;
@@ -37,6 +37,14 @@ public class InputMaster : IInputActionCollection
                     ""name"": ""Interaction"",
                     ""type"": ""Button"",
                     ""id"": ""566b80fb-bee3-43f2-906f-57a4bce0bac5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Inventory Controls"",
+                    ""type"": ""Button"",
+                    ""id"": ""a8ed2059-6245-43a7-97a0-53f390a775c6"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -178,11 +186,22 @@ public class InputMaster : IInputActionCollection
                 {
                     ""name"": """",
                     ""id"": ""888ca6f3-6006-4c84-b368-aaef9a031a9e"",
-                    ""path"": ""<Keyboard>/f"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard and Mouse"",
                     ""action"": ""Interaction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8bc32b66-51f9-42b5-81fd-a19dd6041c37"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Inventory Controls"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -224,6 +243,7 @@ public class InputMaster : IInputActionCollection
         m_Player_WeaponControls = m_Player.GetAction("Weapon Controls");
         m_Player_Movement = m_Player.GetAction("Movement");
         m_Player_Interaction = m_Player.GetAction("Interaction");
+        m_Player_InventoryControls = m_Player.GetAction("Inventory Controls");
     }
 
     ~InputMaster()
@@ -276,6 +296,7 @@ public class InputMaster : IInputActionCollection
     private readonly InputAction m_Player_WeaponControls;
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Interaction;
+    private readonly InputAction m_Player_InventoryControls;
     public struct PlayerActions
     {
         private InputMaster m_Wrapper;
@@ -283,6 +304,7 @@ public class InputMaster : IInputActionCollection
         public InputAction @WeaponControls => m_Wrapper.m_Player_WeaponControls;
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Interaction => m_Wrapper.m_Player_Interaction;
+        public InputAction @InventoryControls => m_Wrapper.m_Player_InventoryControls;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -301,6 +323,9 @@ public class InputMaster : IInputActionCollection
                 Interaction.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteraction;
                 Interaction.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteraction;
                 Interaction.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteraction;
+                InventoryControls.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInventoryControls;
+                InventoryControls.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInventoryControls;
+                InventoryControls.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInventoryControls;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -314,6 +339,9 @@ public class InputMaster : IInputActionCollection
                 Interaction.started += instance.OnInteraction;
                 Interaction.performed += instance.OnInteraction;
                 Interaction.canceled += instance.OnInteraction;
+                InventoryControls.started += instance.OnInventoryControls;
+                InventoryControls.performed += instance.OnInventoryControls;
+                InventoryControls.canceled += instance.OnInventoryControls;
             }
         }
     }
@@ -341,5 +369,6 @@ public class InputMaster : IInputActionCollection
         void OnWeaponControls(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
         void OnInteraction(InputAction.CallbackContext context);
+        void OnInventoryControls(InputAction.CallbackContext context);
     }
 }
