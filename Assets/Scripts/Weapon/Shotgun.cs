@@ -70,9 +70,4 @@ public class Shotgun : Weapon
 
 		animator.SetTrigger("Shoot");
 	}
-
-	public void OnPumpAnimationFinished()
-	{
-		canShoot = true;
-	}
 }

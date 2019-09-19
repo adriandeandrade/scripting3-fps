@@ -11,17 +11,21 @@ public class Player : BaseDamageable
 	[SerializeField] private List<Weapon> weapons = new List<Weapon>();
 	[SerializeField] private Weapon currentWeapon;
 	[SerializeField] private Weapon otherWeapon;
-	
+
 	// Private Variables
 	private bool isReloading;
 	private bool isHoldingWeapon;
-
 
 	// Components
 	private Camera cam;
 
 	public bool IsReloading { get => isReloading; set => isReloading = value; }
 	public bool IsHoldingWeapon { get => isHoldingWeapon; set => isHoldingWeapon = value; }
+	public Weapon CurrentWeaponInHand { get => currentWeapon; }
+
+	// Events
+	public delegate void OnWeaponCycledAction();
+	public static event OnWeaponCycledAction OnWeaponCycled;
 
 	protected override void Awake()
 	{
@@ -43,19 +47,24 @@ public class Player : BaseDamageable
 
 	private void CycleWeapons(InputAction.CallbackContext context)
 	{
-		if(CanCycleWeapons())
+		if (CanCycleWeapons())
 		{
 			Weapon oldWeapon = currentWeapon;
 			oldWeapon.gameObject.SetActive(false);
 			currentWeapon = otherWeapon;
 			otherWeapon = oldWeapon;
 			currentWeapon.gameObject.SetActive(true);
+
+			if (OnWeaponCycled != null)
+			{
+				OnWeaponCycled.Invoke();
+			}
 		}
 	}
 
 	private bool CanCycleWeapons()
 	{
-		return weapons.Count > 1;
+		return weapons.Count > 1 && !currentWeapon.IsCycling;
 	}
 
 	private void InitializeInput()
@@ -65,7 +74,10 @@ public class Player : BaseDamageable
 	}
 
 	private void OnShoot(InputAction.CallbackContext context)
-	{	
-		currentWeapon.Shoot();
+	{
+		if (currentWeapon != null)
+		{
+			currentWeapon.Shoot();
+		}
 	}
 }

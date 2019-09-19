@@ -6,7 +6,9 @@ public class Inventory : MonoBehaviour
 {
 	private Dictionary<Item, int> itemDict = new Dictionary<Item, int>();
 
-	//private List<Item> items = new List<Item>();
+	//Events
+	public delegate void OnItemAddedAction();
+	public static event OnItemAddedAction OnItemAdded;
 
 	public void AddItem(Item itemToAdd, int amountToAdd)
 	{
@@ -17,6 +19,11 @@ public class Inventory : MonoBehaviour
 		else
 		{
 			itemDict.Add(itemToAdd, amountToAdd);
+		}
+
+		if(OnItemAdded != null)
+		{
+			OnItemAdded.Invoke();
 		}
 
 		Debug.Log("Added: " + amountToAdd + " of " + itemToAdd.itemName);

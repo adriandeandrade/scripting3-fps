@@ -26,14 +26,17 @@ public class Toolbox : MonoBehaviour
 
 	private InventoryManager inventoryManager;
 	private InputManager inputManager;
+	private UIManager uiManager;
 	private CrosshairController crosshairController;
 
 	private void Awake()
 	{
 		InitializeSingelon();
+
 		inventoryManager = gameObject.AddComponent<InventoryManager>();
 		inputManager = gameObject.AddComponent<InputManager>();
 		crosshairController = gameObject.AddComponent<CrosshairController>();
+		uiManager = gameObject.AddComponent<UIManager>();
 	}
 
 	public InventoryManager GetInventoryManager()
@@ -49,5 +52,10 @@ public class Toolbox : MonoBehaviour
 	public CrosshairController GetCrosshairController()
 	{
 		return crosshairController;
+	}
+
+	public UIManager GetUIManager()
+	{
+		return uiManager;
 	}
 }

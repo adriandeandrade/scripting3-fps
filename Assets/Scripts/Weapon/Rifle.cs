@@ -25,5 +25,7 @@ public class Rifle : Weapon
 
     		Debug.Log("Object hit: " + hit.collider.name);
 		}
+
+        animator.SetTrigger("Shoot");
     }
 }

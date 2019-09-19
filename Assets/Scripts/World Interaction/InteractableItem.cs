@@ -16,7 +16,7 @@ public class InteractableItem : Interactable
 		Destroy(gameObject);
 	}
 
-	private void HandleItem(Item _item)
+	protected virtual void HandleItem(Item _item)
 	{
 		Toolbox.instance.GetInventoryManager().inventory.AddItem(item, stackSize);
 	}

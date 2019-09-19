@@ -23,5 +23,9 @@ public class InventoryInspector : Editor
 			inventoryTarget.AddItem(itemToAdd, amountToAdd);
 		}
 
+		if(GUILayout.Button("Print Inventory"))
+		{
+			inventoryTarget.PrintInventory();
+		}
 	}
 }
