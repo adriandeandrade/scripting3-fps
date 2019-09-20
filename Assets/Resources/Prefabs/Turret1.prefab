@@ -52,9 +52,9 @@ MonoBehaviour:
   mr: {fileID: 703338890744555163}
   damageColor: {r: 0, g: 0.9329295, b: 1, a: 1}
   rotateSpeed: 80
-  maxAttackDistance: 30
-  fireRate: 0.9
-  fireDelay: 1
+  maxAttackDistance: 40
+  fireRate: 0.6
+  fireDelay: 0.6
   firePoint: {fileID: 8235082101089957476}
   partToRotate: {fileID: 8228665108053891816}
   gun: {fileID: 6394465395266815412}
@@ -195,7 +195,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 2941274158721294118, guid: 2e303ba506595d44891f73b07e900c40, type: 3}
 --- !u!1 &3923951299752887737
@@ -479,7 +479,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -6355190233752760746, guid: 2e303ba506595d44891f73b07e900c40, type: 3}
 --- !u!1 &8611210328737948159
