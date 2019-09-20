@@ -48,6 +48,22 @@ public class InputMaster : IInputActionCollection
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""d4bbedf3-6082-458a-93db-c1a2860c4fca"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""9372d3aa-34a1-4ea5-9a87-89e3d696e331"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -204,6 +220,28 @@ public class InputMaster : IInputActionCollection
                     ""action"": ""Inventory Controls"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c38f0c8d-2e3c-4593-ac00-9358c3983de3"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""93b1bbc1-9a22-4375-8a27-4ddef2b445f7"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -244,6 +282,8 @@ public class InputMaster : IInputActionCollection
         m_Player_Movement = m_Player.GetAction("Movement");
         m_Player_Interaction = m_Player.GetAction("Interaction");
         m_Player_InventoryControls = m_Player.GetAction("Inventory Controls");
+        m_Player_Jump = m_Player.GetAction("Jump");
+        m_Player_Reload = m_Player.GetAction("Reload");
     }
 
     ~InputMaster()
@@ -297,6 +337,8 @@ public class InputMaster : IInputActionCollection
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Interaction;
     private readonly InputAction m_Player_InventoryControls;
+    private readonly InputAction m_Player_Jump;
+    private readonly InputAction m_Player_Reload;
     public struct PlayerActions
     {
         private InputMaster m_Wrapper;
@@ -305,6 +347,8 @@ public class InputMaster : IInputActionCollection
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Interaction => m_Wrapper.m_Player_Interaction;
         public InputAction @InventoryControls => m_Wrapper.m_Player_InventoryControls;
+        public InputAction @Jump => m_Wrapper.m_Player_Jump;
+        public InputAction @Reload => m_Wrapper.m_Player_Reload;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -326,6 +370,12 @@ public class InputMaster : IInputActionCollection
                 InventoryControls.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInventoryControls;
                 InventoryControls.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInventoryControls;
                 InventoryControls.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInventoryControls;
+                Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                Reload.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReload;
+                Reload.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReload;
+                Reload.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReload;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -342,6 +392,12 @@ public class InputMaster : IInputActionCollection
                 InventoryControls.started += instance.OnInventoryControls;
                 InventoryControls.performed += instance.OnInventoryControls;
                 InventoryControls.canceled += instance.OnInventoryControls;
+                Jump.started += instance.OnJump;
+                Jump.performed += instance.OnJump;
+                Jump.canceled += instance.OnJump;
+                Reload.started += instance.OnReload;
+                Reload.performed += instance.OnReload;
+                Reload.canceled += instance.OnReload;
             }
         }
     }
@@ -370,5 +426,7 @@ public class InputMaster : IInputActionCollection
         void OnMovement(InputAction.CallbackContext context);
         void OnInteraction(InputAction.CallbackContext context);
         void OnInventoryControls(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
     }
 }

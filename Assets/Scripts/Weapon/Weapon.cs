@@ -68,10 +68,10 @@ public abstract class Weapon : MonoBehaviour
 
 	private void LateUpdate()
 	{
-		if (CanReload())
+		/* if (CanReload())
 		{
 			StartReload();
-		}
+		} */
 	}
 
 	public void Shoot()

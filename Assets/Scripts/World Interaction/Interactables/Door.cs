@@ -14,16 +14,6 @@ public class Door : Interactable
 	// Private Variables
 	private bool unlocked = false;
 
-	public override void ActivateInteractionUI()
-	{
-
-	}
-
-	public override void DeactivateInteractionUI()
-	{
-
-	}
-
 	public override void Interact()
 	{
 		Inventory inventory = Toolbox.instance.GetInventoryManager().inventory;

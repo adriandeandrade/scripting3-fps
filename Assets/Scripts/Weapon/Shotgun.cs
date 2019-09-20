@@ -50,7 +50,6 @@ public class Shotgun : Weapon
 
 				objectsHit.Add(hit.collider.gameObject);
 				hitPoints.Add(hit);
-				//Debug.Log("Object hit: " + hit.collider.name);
 
 			}
 		}

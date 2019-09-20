@@ -70,6 +70,7 @@ public class Player : BaseDamageable
 	private void InitializeInput()
 	{
 		Toolbox.instance.GetInputManager().weaponControls.performed += OnShoot;
+		Toolbox.instance.GetInputManager().reloadControl.performed += OnReload;
 		Toolbox.instance.GetInputManager().cycleWeaponControls.performed += CycleWeapons;
 	}
 
@@ -78,6 +79,14 @@ public class Player : BaseDamageable
 		if (currentWeapon != null)
 		{
 			currentWeapon.Shoot();
+		}
+	}
+
+	private void OnReload(InputAction.CallbackContext context)
+	{
+		if (currentWeapon != null)
+		{
+			currentWeapon.StartReload();
 		}
 	}
 }

@@ -20,24 +20,4 @@ public class InteractableItem : Interactable
 	{
 		Toolbox.instance.GetInventoryManager().inventory.AddItem(item, stackSize);
 	}
-
-	public override void ActivateInteractionUI()
-	{
-		if (!hasInteractionUI) return;
-
-		if (!activeUI)
-		{
-			activeUI = true;
-		}
-	}
-
-	public override void DeactivateInteractionUI()
-	{
-		if (!hasInteractionUI) return;
-
-		if (activeUI)
-		{
-			activeUI = false;
-		}
-	}
 }
