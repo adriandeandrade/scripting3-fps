@@ -185,7 +185,6 @@ public abstract class Weapon : MonoBehaviour
 		SetState(WeaponStates.CYCLING);
 	}
 
-
 	// OnCycleFinish: This gets called after the weapon is finished cycling using an animation event.
 	public void OnCycleFinish()
 	{

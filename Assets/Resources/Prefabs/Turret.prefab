@@ -51,9 +51,9 @@ MonoBehaviour:
   startHealth: 10
   mr: {fileID: 2233684968456721784}
   damageColor: {r: 0, g: 0.9329295, b: 1, a: 1}
-  rotateSpeed: 50
+  rotateSpeed: 60
   maxAttackDistance: 30
-  fireRate: 2
+  fireRate: 0.9
   fireDelay: 1
   firePoint: {fileID: 4601443694902586321}
   partToRotate: {fileID: 1691289974809729588}
