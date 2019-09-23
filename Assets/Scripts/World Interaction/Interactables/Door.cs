@@ -14,6 +14,10 @@ public class Door : Interactable
 	// Private Variables
 	private bool unlocked = false;
 
+	// Events
+	public delegate void OnUnlockAction();
+	public static event OnUnlockAction OnUnlock;
+
 	public override void Interact()
 	{
 		Inventory inventory = Toolbox.instance.GetInventoryManager().inventory;
@@ -33,5 +37,10 @@ public class Door : Interactable
 	{
         partToRemoveWhenUnlocked.SetActive(false);
         unlocked = true;
+
+		if(OnUnlock != null)
+		{
+			OnUnlock.Invoke();
+		}
 	}
 }

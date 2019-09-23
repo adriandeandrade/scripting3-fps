@@ -7,5 +7,7 @@ using UnityEngine;
 public class Item : ScriptableObject
 {
     public string itemName;
+    public int minStackSize;
     public ItemTypes itemTypes;
+    public GameObject itemPrefab;
 }
