@@ -39,9 +39,8 @@ public class Player : BaseDamageable
 		BaseDamageable.OnTakeDamageEvent += UpdateHealth;
 	}
 
-	protected override void Awake()
+	protected void Awake()
 	{
-		base.Awake();
 		cam = Camera.main;
 	}
 
@@ -55,7 +54,7 @@ public class Player : BaseDamageable
 
 	private void UpdateHealth()
 	{
-		Debug.Log("Took damage");
+		//Debug.Log("Took damage");
 
 		if (healthBar != null)
 		{

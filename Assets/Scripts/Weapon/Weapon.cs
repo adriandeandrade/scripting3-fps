@@ -53,7 +53,6 @@ public abstract class Weapon : MonoBehaviour
 		inventory = Toolbox.instance.GetInventoryManager().inventory;
 
 		InitializeWeapon();
-		Debug.Log("Weapon Started");
 	}
 
 	private void Update()

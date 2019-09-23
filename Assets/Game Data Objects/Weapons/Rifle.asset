@@ -16,7 +16,7 @@ MonoBehaviour:
   ammoType: {fileID: 11400000, guid: 3771f484621fbc14899bf19fa4cbfaba, type: 2}
   weaponName: Rifle
   magazineCapacity: 5
-  damageAmount: 5
+  damageAmount: 25
   fireRate: 1
   fireRange: 50
   cycleTime: 0.5
