@@ -10,6 +10,8 @@ public class InteractableItem : Interactable
 	[SerializeField] protected Item item;
 	[SerializeField] protected int stackSize;
 
+	public int StackSize { get => stackSize; }
+
 	public override void Interact()
 	{
 		HandleItem(item);

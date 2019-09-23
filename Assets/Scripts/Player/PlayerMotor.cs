@@ -74,7 +74,7 @@ public class PlayerMotor : MonoBehaviour
 		// Subscribe Input Events
 		Toolbox.instance.GetInputManager().movementControls.performed += OnMovementChanged;
 		Toolbox.instance.GetInputManager().movementControls.canceled += OnMovementChanged;
-		
+
 		Toolbox.instance.GetInputManager().jumpControl.performed += JumpInput;
 
 		mouseLook = new MouseLook();
@@ -107,7 +107,7 @@ public class PlayerMotor : MonoBehaviour
 
 		if (!isGrounded)
 		{
-			rBody.AddForce(new Vector3(0f, -gravity * rBody.mass, 0f)); // Add gravity
+			rBody.AddForce(new Vector3(rBody.velocity.x, -gravity * rBody.mass, rBody.velocity.z)); // Add gravity
 		}
 
 		mouseLook.UpdateCursorLock();

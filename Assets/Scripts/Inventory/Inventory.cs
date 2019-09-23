@@ -21,9 +21,12 @@ public class Inventory : MonoBehaviour
 			itemDict.Add(itemToAdd, amountToAdd);
 		}
 
-		if(OnItemAdded != null)
+		if (itemToAdd.itemTypes == ItemTypes.Ammo)
 		{
-			OnItemAdded.Invoke();
+			if (OnItemAdded != null)
+			{
+				OnItemAdded.Invoke();
+			}
 		}
 
 		Debug.Log("Added: " + amountToAdd + " of " + itemToAdd.itemName);

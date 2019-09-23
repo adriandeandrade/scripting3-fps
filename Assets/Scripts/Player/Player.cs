@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class Player : BaseDamageable
 {
@@ -11,6 +12,7 @@ public class Player : BaseDamageable
 	[SerializeField] private List<Weapon> weapons = new List<Weapon>();
 	[SerializeField] private Weapon currentWeapon;
 	[SerializeField] private Weapon otherWeapon;
+	[SerializeField] private Image healthBar;
 
 	// Private Variables
 	private bool isReloading;
@@ -26,6 +28,11 @@ public class Player : BaseDamageable
 	// Events
 	public delegate void OnWeaponCycledAction();
 	public static event OnWeaponCycledAction OnWeaponCycled;
+
+	private void OnEnable()
+	{
+		BaseDamageable.OnTakeDamageEvent += UpdateHealth;
+	}
 
 	protected override void Awake()
 	{
@@ -43,6 +50,8 @@ public class Player : BaseDamageable
 
 		otherWeapon = weapons[1];
 		otherWeapon.gameObject.SetActive(false);
+
+		UpdateHealth();
 	}
 
 	private void CycleWeapons(InputAction.CallbackContext context)
@@ -87,6 +96,16 @@ public class Player : BaseDamageable
 		if (currentWeapon != null)
 		{
 			currentWeapon.StartReload();
+		}
+	}
+
+	private void UpdateHealth()
+	{
+		Debug.Log("Took damage");
+
+		if(healthBar != null)
+		{
+			healthBar.fillAmount = currentHealth / startHealth;
 		}
 	}
 }

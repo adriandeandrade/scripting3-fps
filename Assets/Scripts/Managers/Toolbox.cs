@@ -27,7 +27,7 @@ public class Toolbox : MonoBehaviour
 	private InventoryManager inventoryManager;
 	private InputManager inputManager;
 	private UIManager uiManager;
-	private CrosshairController crosshairController;
+	private GameManager gameManager;
 
 	private void Awake()
 	{
@@ -35,8 +35,8 @@ public class Toolbox : MonoBehaviour
 
 		inventoryManager = gameObject.AddComponent<InventoryManager>();
 		inputManager = gameObject.AddComponent<InputManager>();
-		crosshairController = gameObject.AddComponent<CrosshairController>();
 		uiManager = gameObject.AddComponent<UIManager>();
+		gameManager = gameObject.AddComponent<GameManager>();
 	}
 
 	public InventoryManager GetInventoryManager()
@@ -49,13 +49,13 @@ public class Toolbox : MonoBehaviour
 		return inputManager;
 	}
 
-	public CrosshairController GetCrosshairController()
-	{
-		return crosshairController;
-	}
-
 	public UIManager GetUIManager()
 	{
 		return uiManager;
+	}
+
+	public GameManager GetGameManager()
+	{
+		return gameManager;
 	}
 }
