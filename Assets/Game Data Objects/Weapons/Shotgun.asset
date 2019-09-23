@@ -16,7 +16,7 @@ MonoBehaviour:
   ammoType: {fileID: 11400000, guid: a4a72fee59a99cd45960c6be2009d5a5, type: 2}
   weaponName: Shotgun
   magazineCapacity: 8
-  damageAmount: 4
+  damageAmount: 15
   fireRate: 0.5
   fireRange: 25
   cycleTime: 0.1

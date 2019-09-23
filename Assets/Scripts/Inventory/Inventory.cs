@@ -12,7 +12,7 @@ public class Inventory
 
 	public Inventory()
 	{
-		Debug.Log("Inventory Initialized.");
+		
 	}
 
 	public void AddItem(Item itemToAdd, int amountToAdd)

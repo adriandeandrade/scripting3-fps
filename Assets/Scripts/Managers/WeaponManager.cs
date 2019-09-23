@@ -11,6 +11,8 @@ public class WeaponManager : MonoBehaviour
 	private List<Weapon> weapons = new List<Weapon>();
 	private Weapon currentWeapon;
 	private Weapon otherWeapon;
+	
+	private Player player;
 
 	public Weapon CurrentWeapon { get => currentWeapon; }
 
@@ -25,7 +27,6 @@ public class WeaponManager : MonoBehaviour
 	private void Awake()
 	{
 		InitializeInput();
-
 		//InitializeWeaponManager();
 	}
 
@@ -86,7 +87,7 @@ public class WeaponManager : MonoBehaviour
 
 	private bool CanCycleWeapons()
 	{
-		return weapons.Count > 1 && !currentWeapon.IsCycling;
+		return weapons.Count > 1 && !currentWeapon.IsCycling && !player.IsReloading;
 	}
 
 	private void OnShoot(InputAction.CallbackContext context)
@@ -108,5 +109,6 @@ public class WeaponManager : MonoBehaviour
 	private void UpdateWeaponManagerReferences(Scene scene, LoadSceneMode mode)
 	{
 		InitializeWeaponManager();
+		player = FindObjectOfType<Player>();
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum TurretStates
 {
@@ -18,24 +19,27 @@ public class Turret1 : BaseDamageable
 	[SerializeField] private Transform firePoint;
 	[SerializeField] private Transform partToRotate;
 	[SerializeField] private Transform gun;
+	[SerializeField] private Image healthBar;
 
 	// Private Variables
 	private bool canSeePlayer;
+	private bool doTracking = true;
 	private float nextFireTime;
 	private float currentFireDelay;
 	private TurretStates currentState;
 
 	// Components
 	private Player target;
-	private MeshRenderer gunMr;
 	private Animator animator;
 
-	protected override void Awake()
+	private void OnEnable()
 	{
-		base.Awake();
+		BaseDamageable.OnTakeDamageEvent += UpdateHealth;
+	}
 
+	protected void Awake()
+	{
 		target = FindObjectOfType<Player>();
-		gunMr = gun.GetComponent<MeshRenderer>();
 		animator = GetComponent<Animator>();
 	}
 
@@ -49,8 +53,11 @@ public class Turret1 : BaseDamageable
 
 	private void Update()
 	{
-		RaycastToTarget();
-		UpdateStates();
+		if (doTracking)
+		{
+			RaycastToTarget();
+			UpdateStates();
+		}
 	}
 
 	private void SetState(TurretStates newState)
@@ -156,14 +163,7 @@ public class Turret1 : BaseDamageable
 	{
 		ShootDamageRay();
 		nextFireTime = Time.time + fireRate;
-		gunMr.material.SetColor("_BaseColor", Color.red);
-		Invoke("SetOriginalColor", 0.5f);
 		animator.SetTrigger("Shoot");
-	}
-
-	private void SetOriginalColor()
-	{
-		gunMr.material.SetColor("_BaseColor", originalColor);
 	}
 
 	private void ShootDamageRay()
@@ -186,7 +186,7 @@ public class Turret1 : BaseDamageable
 			}
 		}
 	}
-	
+
 	private void RotateTurret()
 	{
 		Vector3 directionToTarget = target.transform.position - partToRotate.transform.position;
@@ -247,5 +247,15 @@ public class Turret1 : BaseDamageable
 	private bool CheckDistanceToTarget()
 	{
 		return GetDistanceToTarget() <= maxAttackDistance;
+	}
+
+	private void UpdateHealth()
+	{
+		Debug.Log("Turret Took damage");
+
+		if (healthBar != null)
+		{
+			healthBar.fillAmount = currentHealth / startHealth;
+		}
 	}
 }
