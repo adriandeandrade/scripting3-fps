@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public abstract class Weapon : MonoBehaviour
 {
@@ -10,15 +12,16 @@ public abstract class Weapon : MonoBehaviour
 	[SerializeField] protected LayerMask ignoreMask;
 	[SerializeField] protected GameObject bulletHolePrefab;
 	[SerializeField] protected bool debug;
+	[SerializeField] protected WeaponAmmoUI ammoUI;
 
-	protected enum WeaponStates { READY, RELOAD, CYCLING, NOAMMO };
+	protected enum WeaponStates { READY, RELOADING, CYCLING, NOAMMO };
 	protected WeaponStates weaponState = WeaponStates.READY;
 
 	// Private Variables
 	protected int bulletsLeftInMagazine;
 	protected int bulletsLeftBeforeReload;
-	protected float nextFireTime;
-	protected bool canShoot = true;
+
+	protected bool isCycling = false;
 
 	// Components
 	protected Camera cam;
@@ -26,27 +29,43 @@ public abstract class Weapon : MonoBehaviour
 	protected Animator animator;
 	protected Inventory inventory;
 
+	// Properties
+	public bool IsCycling { get => isCycling; }
+	public int BulletsLeftInMagazine { get => bulletsLeftInMagazine; }
+	public WeaponData WeaponData { get => weaponData; }
+
+	private void OnEnable()
+	{
+		Inventory.OnItemAdded += UpdateAmmoUI;
+		UpdateAmmoUI();
+	}
+
 	private void Awake()
 	{
 		cam = Camera.main;
 		player = FindObjectOfType<Player>(); // Get in GameManager and use that as reference to player. [Toolbox.instance.GetGameManager.PlayerRef]
 		animator = GetComponent<Animator>();
+		UpdateAmmoUI();
 	}
 
 	protected virtual void Start()
 	{
 		inventory = Toolbox.instance.GetInventoryManager().inventory;
 
-		bulletsLeftInMagazine = weaponData.magazineCapacity;
-		nextFireTime = Time.time + weaponData.fireRate;
+		InitializeWeapon();
+		Debug.Log("Weapon Started");
 	}
 
-	private void LateUpdate()
+	private void Update()
 	{
-		if (CanReload())
-		{
-			StartReload();
-		}
+		UpdateStates();
+	}
+
+	protected void InitializeWeapon()
+	{
+		bulletsLeftInMagazine = weaponData.magazineCapacity;
+		SetState(WeaponStates.READY);
+		UpdateAmmoUI();
 	}
 
 	public void Shoot()
@@ -54,33 +73,16 @@ public abstract class Weapon : MonoBehaviour
 		if (CanShoot())
 		{
 			ShootRay();
+			OnStartCycle();
 			bulletsLeftInMagazine--;
-			nextFireTime = Time.time + weaponData.fireRate;
-			canShoot = false;
-			//Debug.Log("Shot weapon");
+			UpdateAmmoUI();
+			SetState(WeaponStates.CYCLING);
 		}
-	}
-
-	public void SpawnBulletHole(List<RaycastHit> hitPoints)
-	{
-		foreach (RaycastHit hitPoint in hitPoints)
-		{
-			Vector3 spawnPos = new Vector3(hitPoint.point.x, hitPoint.point.y, hitPoint.point.z - 0.1f);
-
-			Instantiate(bulletHolePrefab, spawnPos, Quaternion.LookRotation(hitPoint.normal));
-		}
-	}
-
-	public void SpawnBulletHole(RaycastHit hitPoint)
-	{
-			Vector3 spawnPos = new Vector3(hitPoint.point.x, hitPoint.point.y, hitPoint.point.z - 0.1f);
-			Instantiate(bulletHolePrefab, spawnPos, Quaternion.LookRotation(hitPoint.normal));
-		
 	}
 
 	public bool CanShoot()
 	{
-		if (!player.IsReloading && Time.time > nextFireTime && bulletsLeftInMagazine > 0 && canShoot)
+		if (!player.IsReloading && !isCycling && bulletsLeftInMagazine > 0)
 		{
 			return true;
 		}
@@ -94,13 +96,9 @@ public abstract class Weapon : MonoBehaviour
 	{
 		if (!player.IsReloading && bulletsLeftInMagazine == 0 && inventory.CheckIfItemExists(weaponData.ammoType))
 		{
-			if (inventory.CheckItemCount(weaponData.ammoType) >= weaponData.magazineCapacity)
-			{
-				return true;
-			}
+			return true;
 		}
 
-		canShoot = true;
 		return false;
 	}
 
@@ -124,7 +122,6 @@ public abstract class Weapon : MonoBehaviour
 	private IEnumerator Reload()
 	{
 		player.IsReloading = true;
-		canShoot = false;
 
 		yield return new WaitForSeconds(0.2f);
 
@@ -138,8 +135,175 @@ public abstract class Weapon : MonoBehaviour
 		}
 
 		player.IsReloading = false;
-		inventory.RemoveItem(weaponData.ammoType, weaponData.magazineCapacity);
-		canShoot = true;
-		bulletsLeftInMagazine = weaponData.magazineCapacity;
+
+		int ammoAmountInInventory = inventory.CheckItemCount(weaponData.ammoType);
+		if (ammoAmountInInventory > 0)
+		{
+			if (ammoAmountInInventory >= weaponData.magazineCapacity)
+			{
+				ammoAmountInInventory = weaponData.magazineCapacity;
+			}
+		}
+
+		inventory.RemoveItem(weaponData.ammoType, ammoAmountInInventory);
+		bulletsLeftInMagazine = ammoAmountInInventory;
+		UpdateAmmoUI();
+		SetState(WeaponStates.READY);
 	}
+
+	private void UpdateAmmoUI(Item item)
+	{
+		if (ammoUI != null)
+		{
+			if (item.itemTypes == ItemTypes.Ammo)
+			{
+				ammoUI.UpdateWeaponAmmoUI(this, item);
+			}
+		}
+	}
+
+	private void UpdateAmmoUI()
+	{
+		if (ammoUI != null)
+		{
+			ammoUI.UpdateWeaponAmmoUI(this);
+		}
+	}
+
+	public void SpawnBulletHole(List<RaycastHit> hitPoints)
+	{
+		foreach (RaycastHit hitPoint in hitPoints)
+		{
+			Vector3 spawnPos = new Vector3(hitPoint.point.x, hitPoint.point.y, hitPoint.point.z - 0.1f);
+			GameObject bulletHole = Instantiate(bulletHolePrefab, spawnPos, Quaternion.LookRotation(hitPoint.normal));
+			bulletHole.transform.parent = hitPoint.transform;
+		}
+	}
+
+	public void SpawnBulletHole(RaycastHit hitPoint)
+	{
+		Vector3 spawnPos = new Vector3(hitPoint.point.x, hitPoint.point.y, hitPoint.point.z - 0.1f);
+		Instantiate(bulletHolePrefab, spawnPos, Quaternion.LookRotation(hitPoint.normal));
+	}
+
+
+	//	OnStartCycle: This gets called eveytime the weapon cycles. (After every shot)
+	public void OnStartCycle()
+	{
+		SetState(WeaponStates.CYCLING);
+	}
+
+	// OnCycleFinish: This gets called after the weapon is finished cycling using an animation event.
+	public void OnCycleFinish()
+	{
+		isCycling = false;
+		Debug.Log("On cycle finish");
+	}
+
+	#region State Handling
+
+	private void SetState(WeaponStates newState)
+	{
+		switch (newState)
+		{
+			case WeaponStates.CYCLING:
+				weaponState = WeaponStates.CYCLING;
+				InitCyclingState();
+				break;
+
+			case WeaponStates.NOAMMO:
+				weaponState = WeaponStates.NOAMMO;
+				InitNoAmmoState();
+				break;
+
+			case WeaponStates.READY:
+				weaponState = WeaponStates.READY;
+				InitReadyState();
+				break;
+
+			case WeaponStates.RELOADING:
+				weaponState = WeaponStates.RELOADING;
+				InitReloadingState();
+				break;
+		}
+	}
+
+	private void UpdateStates()
+	{
+		switch (weaponState)
+		{
+			case WeaponStates.CYCLING:
+				UpdateCyclingState();
+				break;
+
+			case WeaponStates.NOAMMO:
+				UpdateNoAmmoState();
+				break;
+
+			case WeaponStates.READY:
+				UpdateReadyState();
+				break;
+
+			case WeaponStates.RELOADING:
+				UpdateReloadingState();
+				break;
+		}
+	}
+
+	private void InitCyclingState()
+	{
+		isCycling = true;
+	}
+
+	private void InitNoAmmoState()
+	{
+
+	}
+
+	private void InitReadyState()
+	{
+		if (bulletsLeftInMagazine <= 0)
+		{
+
+			SetState(WeaponStates.RELOADING);
+		}
+	}
+
+	private void InitReloadingState()
+	{
+		if (CanReload())
+		{
+			StartReload();
+		}
+		else
+		{
+			SetState(WeaponStates.NOAMMO);
+		}
+	}
+
+	private void UpdateCyclingState()
+	{
+		if (!isCycling)
+		{
+			SetState(WeaponStates.READY);
+		}
+
+	}
+
+	private void UpdateNoAmmoState()
+	{
+
+	}
+
+	private void UpdateReadyState()
+	{
+
+	}
+
+	private void UpdateReloadingState()
+	{
+
+	}
+
+	#endregion
 }

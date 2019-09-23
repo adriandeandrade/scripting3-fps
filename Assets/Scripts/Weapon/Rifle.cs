@@ -21,9 +21,18 @@ public class Rifle : Weapon
                 otherRigidBody.AddForceAtPosition(knockbackDirection * 5f, hit.point, ForceMode.Impulse);
             }
 
+            IDamageable damageable = hit.collider.GetComponent<IDamageable>();
+
+				if (damageable != null)
+				{
+					damageable.TakeDamage(weaponData.damageAmount);
+				}
+
             SpawnBulletHole(hit);
 
     		Debug.Log("Object hit: " + hit.collider.name);
 		}
+
+        animator.SetTrigger("Shoot");
     }
 }

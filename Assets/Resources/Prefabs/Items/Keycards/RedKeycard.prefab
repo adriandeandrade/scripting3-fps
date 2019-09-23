@@ -59,8 +59,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e81edaebca430429abea8a73452697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasInteractionUI: 1
   item: {fileID: 11400000, guid: 574385ae1387fe44f9d1daf72c6ac0f1, type: 2}
+  stackSize: 1
   cardColor: {r: 1, g: 0.006469218, b: 0, a: 1}
 --- !u!114 &5206662448599917759
 MonoBehaviour:

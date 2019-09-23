@@ -59,9 +59,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e81edaebca430429abea8a73452697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasInteractionUI: 1
   item: {fileID: 11400000, guid: c816f99cf999b9948a9fa014331e8a77, type: 2}
-  cardColor: {r: 0, g: 0.19758391, b: 1, a: 1}
+  stackSize: 1
+  cardColor: {r: 0, g: 0.87058824, b: 1, a: 1}
 --- !u!114 &8047259164141744631
 MonoBehaviour:
   m_ObjectHideFlags: 0

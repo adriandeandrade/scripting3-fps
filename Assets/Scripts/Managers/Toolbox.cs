@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[DefaultExecutionOrder(-1000)]
 public class Toolbox : MonoBehaviour
 {
 	#region Singleton
 	public static Toolbox instance;
 
-	private void InitializeSingelon()
+	private void InitializeSingleton()
 	{
 		if (instance == null)
 		{
@@ -26,14 +27,17 @@ public class Toolbox : MonoBehaviour
 
 	private InventoryManager inventoryManager;
 	private InputManager inputManager;
-	private CrosshairController crosshairController;
+	private GameManager gameManager;
+	private WeaponManager weaponManager;
 
 	private void Awake()
 	{
-		InitializeSingelon();
+		InitializeSingleton();
+
 		inventoryManager = gameObject.AddComponent<InventoryManager>();
 		inputManager = gameObject.AddComponent<InputManager>();
-		crosshairController = gameObject.AddComponent<CrosshairController>();
+		gameManager = gameObject.AddComponent<GameManager>();
+		weaponManager = gameObject.AddComponent<WeaponManager>();
 	}
 
 	public InventoryManager GetInventoryManager()
@@ -46,8 +50,13 @@ public class Toolbox : MonoBehaviour
 		return inputManager;
 	}
 
-	public CrosshairController GetCrosshairController()
+	public GameManager GetGameManager()
 	{
-		return crosshairController;
+		return gameManager;
+	}
+
+	public WeaponManager GetWeaponManager()
+	{
+		return weaponManager;
 	}
 }

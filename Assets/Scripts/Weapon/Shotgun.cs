@@ -50,7 +50,6 @@ public class Shotgun : Weapon
 
 				objectsHit.Add(hit.collider.gameObject);
 				hitPoints.Add(hit);
-				//Debug.Log("Object hit: " + hit.collider.name);
 
 			}
 		}
@@ -69,10 +68,5 @@ public class Shotgun : Weapon
 		SpawnBulletHole(hitPoints);
 
 		animator.SetTrigger("Shoot");
-	}
-
-	public void OnPumpAnimationFinished()
-	{
-		canShoot = true;
 	}
 }

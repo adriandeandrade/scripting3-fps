@@ -13,4 +13,7 @@ MonoBehaviour:
   m_Name: ShotgunAmmo
   m_EditorClassIdentifier: 
   itemName: Shotgun Ammo
+  minStackSize: 16
   itemTypes: 2
+  itemPrefab: {fileID: 8764845323994025804, guid: 67fd4da8602800e4e81a9a43c9212264,
+    type: 3}

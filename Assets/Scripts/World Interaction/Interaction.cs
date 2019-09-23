@@ -13,6 +13,7 @@ public class Interaction : MonoBehaviour
 	// Private Variables
 	private bool canInteract;
 	private Interactable lastItemInteracted;
+	private CrosshairController crosshairController;
 
 	// Componenets
 	private Camera cam;
@@ -22,14 +23,15 @@ public class Interaction : MonoBehaviour
 		Toolbox.instance.GetInputManager().interactionControls.performed += OnInteract;
 	}
 
-	private void Start()
-	{
-		InitializeInput();
-	}
-
 	private void Awake()
 	{
 		cam = Camera.main;
+		crosshairController = FindObjectOfType<CrosshairController>();
+	}
+
+	private void Start()
+	{
+		InitializeInput();
 	}
 
 	private void OnInteract(InputAction.CallbackContext context)
@@ -39,7 +41,7 @@ public class Interaction : MonoBehaviour
 			if (lastItemInteracted != null)
 			{
 				lastItemInteracted.Interact();
-				Toolbox.instance.GetCrosshairController().ShowCrosshair();
+				crosshairController.ShowCrosshair();
 				lastItemInteracted = null;
 			}
 		}
@@ -54,7 +56,7 @@ public class Interaction : MonoBehaviour
 	{
 		if (lastItemInteracted != null)
 		{
-			Toolbox.instance.GetCrosshairController().ShowCrosshair();
+			crosshairController.ShowCrosshair();
 			lastItemInteracted = null;
 		}
 
@@ -74,12 +76,12 @@ public class Interaction : MonoBehaviour
 					if (distanceToObject <= maxInteractionDistance)
 					{
 						canInteract = true;
-						Toolbox.instance.GetCrosshairController().ShowInteractionIcon();
+						crosshairController.ShowInteractionIcon();
 					}
 					else
 					{
 						canInteract = false;
-						Toolbox.instance.GetCrosshairController().ShowCrosshair();
+						crosshairController.ShowCrosshair();
 						lastItemInteracted = null;
 					}
 				}
@@ -87,7 +89,7 @@ public class Interaction : MonoBehaviour
 		}
 		else
 		{
-			Toolbox.instance.GetCrosshairController().ShowCrosshair();
+			crosshairController.ShowCrosshair();
 		}
 	}
 

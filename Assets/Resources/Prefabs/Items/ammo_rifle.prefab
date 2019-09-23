@@ -96,8 +96,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6a8c1df3e92f4344bdcea3a2eb27f1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasInteractionUI: 0
   item: {fileID: 11400000, guid: 3771f484621fbc14899bf19fa4cbfaba, type: 2}
+  stackSize: 10
 --- !u!114 &412000676778292997
 MonoBehaviour:
   m_ObjectHideFlags: 0

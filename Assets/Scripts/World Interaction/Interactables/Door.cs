@@ -14,15 +14,9 @@ public class Door : Interactable
 	// Private Variables
 	private bool unlocked = false;
 
-	public override void ActivateInteractionUI()
-	{
-
-	}
-
-	public override void DeactivateInteractionUI()
-	{
-
-	}
+	// Events
+	public delegate void OnUnlockAction();
+	public static event OnUnlockAction OnUnlock;
 
 	public override void Interact()
 	{
@@ -43,5 +37,10 @@ public class Door : Interactable
 	{
         partToRemoveWhenUnlocked.SetActive(false);
         unlocked = true;
+
+		if(OnUnlock != null)
+		{
+			OnUnlock.Invoke();
+		}
 	}
 }

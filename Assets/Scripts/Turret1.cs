@@ -28,6 +28,7 @@ public class Turret1 : BaseDamageable
 	// Components
 	private Player target;
 	private MeshRenderer gunMr;
+	private Animator animator;
 
 	protected override void Awake()
 	{
@@ -35,6 +36,7 @@ public class Turret1 : BaseDamageable
 
 		target = FindObjectOfType<Player>();
 		gunMr = gun.GetComponent<MeshRenderer>();
+		animator = GetComponent<Animator>();
 	}
 
 	protected override void Start()
@@ -156,6 +158,7 @@ public class Turret1 : BaseDamageable
 		nextFireTime = Time.time + fireRate;
 		gunMr.material.SetColor("_BaseColor", Color.red);
 		Invoke("SetOriginalColor", 0.5f);
+		animator.SetTrigger("Shoot");
 	}
 
 	private void SetOriginalColor()
@@ -183,7 +186,7 @@ public class Turret1 : BaseDamageable
 			}
 		}
 	}
-
+	
 	private void RotateTurret()
 	{
 		Vector3 directionToTarget = target.transform.position - partToRotate.transform.position;

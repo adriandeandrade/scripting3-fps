@@ -2,26 +2,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using DG.Tweening;
+using UnityEngine.UI;
 
 public class Player : BaseDamageable
 {
 	// Inspector Fields
 	[Header("Player Configuration")]
-	[SerializeField] private List<Weapon> weapons = new List<Weapon>();
-	[SerializeField] private Weapon currentWeapon;
-	[SerializeField] private Weapon otherWeapon;
-	
+	[SerializeField] private Image healthBar;
+
 	// Private Variables
 	private bool isReloading;
 	private bool isHoldingWeapon;
 
-
 	// Components
 	private Camera cam;
+	private WeaponManager weaponManager;
 
 	public bool IsReloading { get => isReloading; set => isReloading = value; }
 	public bool IsHoldingWeapon { get => isHoldingWeapon; set => isHoldingWeapon = value; }
+
+	public Weapon CurrentWeaponInHand
+	{
+		get
+		{
+			if(Toolbox.instance.GetWeaponManager())
+			{
+				return Toolbox.instance.GetWeaponManager().CurrentWeapon;
+			}
+
+			return null;
+		}
+	}
+
+	private void OnEnable()
+	{
+		BaseDamageable.OnTakeDamageEvent += UpdateHealth;
+	}
 
 	protected override void Awake()
 	{
@@ -32,40 +48,18 @@ public class Player : BaseDamageable
 	protected override void Start()
 	{
 		base.Start();
-		InitializeInput();
-
-		currentWeapon = weapons[0];
-		currentWeapon.gameObject.SetActive(true);
-
-		otherWeapon = weapons[1];
-		otherWeapon.gameObject.SetActive(false);
+		
+		weaponManager = Toolbox.instance.GetWeaponManager();
+		UpdateHealth();
 	}
 
-	private void CycleWeapons(InputAction.CallbackContext context)
+	private void UpdateHealth()
 	{
-		if(CanCycleWeapons())
+		Debug.Log("Took damage");
+
+		if (healthBar != null)
 		{
-			Weapon oldWeapon = currentWeapon;
-			oldWeapon.gameObject.SetActive(false);
-			currentWeapon = otherWeapon;
-			otherWeapon = oldWeapon;
-			currentWeapon.gameObject.SetActive(true);
+			healthBar.fillAmount = currentHealth / startHealth;
 		}
-	}
-
-	private bool CanCycleWeapons()
-	{
-		return weapons.Count > 1;
-	}
-
-	private void InitializeInput()
-	{
-		Toolbox.instance.GetInputManager().weaponControls.performed += OnShoot;
-		Toolbox.instance.GetInputManager().cycleWeaponControls.performed += CycleWeapons;
-	}
-
-	private void OnShoot(InputAction.CallbackContext context)
-	{	
-		currentWeapon.Shoot();
 	}
 }

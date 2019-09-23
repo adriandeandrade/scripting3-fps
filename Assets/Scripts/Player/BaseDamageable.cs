@@ -14,6 +14,10 @@ public class BaseDamageable : MonoBehaviour, IDamageable
 	protected float currentHealth;
     protected Color originalColor;
 
+	// Events
+	public delegate void OnTakeDamageAction();
+	public static event OnTakeDamageAction OnTakeDamageEvent;
+
 	protected virtual void Awake()
 	{
         originalColor = mr.material.GetColor("_BaseColor");
@@ -33,6 +37,11 @@ public class BaseDamageable : MonoBehaviour, IDamageable
 		{
 			OnDeath();
 			return;
+		}
+
+		if(OnTakeDamageEvent != null)
+		{
+			OnTakeDamageEvent.Invoke();
 		}
 	}
 

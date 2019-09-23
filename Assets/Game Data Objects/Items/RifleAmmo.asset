@@ -13,4 +13,7 @@ MonoBehaviour:
   m_Name: RifleAmmo
   m_EditorClassIdentifier: 
   itemName: Rifle Ammo
+  minStackSize: 10
   itemTypes: 2
+  itemPrefab: {fileID: 5327196608585788066, guid: 379346138bdcf96428fe5db2fc941fa5,
+    type: 3}

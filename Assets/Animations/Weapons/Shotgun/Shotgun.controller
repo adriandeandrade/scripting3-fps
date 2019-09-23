@@ -83,7 +83,7 @@ AnimatorController:
   m_Name: Shotgun
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: Pump
+  - m_Name: Cycle
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -119,7 +119,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 5160136889884677124}
-    m_Position: {x: 150, y: 300, z: 0}
+    m_Position: {x: 190, y: 350, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3074431437755277881}
     m_Position: {x: 30, y: 200, z: 0}
@@ -170,8 +170,8 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Pump
-  m_Speed: 1
+  m_Name: Cycle
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -2202470484459486763}
