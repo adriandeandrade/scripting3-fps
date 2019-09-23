@@ -7,9 +7,18 @@ public class WeaponAmmoUI : MonoBehaviour
 	public TextMeshProUGUI ammoLeftInMagText;
 	public TextMeshProUGUI ammoLeftInInventoryText;
 
+	public void UpdateWeaponAmmoUI(Weapon weapon, Item item)
+	{
+		int ammoLeftInWeapon = weapon.BulletsLeftInMagazine;
+		int ammoLeftInInventory = Toolbox.instance.GetInventoryManager().inventory.CheckItemCount(weapon.WeaponData.ammoType);
+
+		ammoLeftInInventoryText.SetText(ammoLeftInInventory.ToString());
+		ammoLeftInMagText.SetText(ammoLeftInWeapon.ToString());
+	}
+
 	public void UpdateWeaponAmmoUI(Weapon weapon)
 	{
-		if (weapon != null)
+		if (Toolbox.instance.GetInventoryManager().inventory != null)
 		{
 			int ammoLeftInWeapon = weapon.BulletsLeftInMagazine;
 			int ammoLeftInInventory = Toolbox.instance.GetInventoryManager().inventory.CheckItemCount(weapon.WeaponData.ammoType);
@@ -19,7 +28,7 @@ public class WeaponAmmoUI : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log("Weapon not found.");
+			Debug.Log("Inventory not found.");
 		}
 	}
 }

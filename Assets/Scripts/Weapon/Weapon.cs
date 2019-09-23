@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public abstract class Weapon : MonoBehaviour
 {
@@ -10,6 +12,7 @@ public abstract class Weapon : MonoBehaviour
 	[SerializeField] protected LayerMask ignoreMask;
 	[SerializeField] protected GameObject bulletHolePrefab;
 	[SerializeField] protected bool debug;
+	[SerializeField] protected WeaponAmmoUI ammoUI;
 
 	protected enum WeaponStates { READY, RELOADING, CYCLING, NOAMMO };
 	protected WeaponStates weaponState = WeaponStates.READY;
@@ -17,8 +20,6 @@ public abstract class Weapon : MonoBehaviour
 	// Private Variables
 	protected int bulletsLeftInMagazine;
 	protected int bulletsLeftBeforeReload;
-
-	protected float currentCycleTime;
 
 	protected bool isCycling = false;
 
@@ -36,7 +37,7 @@ public abstract class Weapon : MonoBehaviour
 	private void OnEnable()
 	{
 		Inventory.OnItemAdded += UpdateAmmoUI;
-		Player.OnWeaponCycled += UpdateAmmoUI;
+		UpdateAmmoUI();
 	}
 
 	private void Awake()
@@ -44,6 +45,7 @@ public abstract class Weapon : MonoBehaviour
 		cam = Camera.main;
 		player = FindObjectOfType<Player>(); // Get in GameManager and use that as reference to player. [Toolbox.instance.GetGameManager.PlayerRef]
 		animator = GetComponent<Animator>();
+		UpdateAmmoUI();
 	}
 
 	protected virtual void Start()
@@ -64,14 +66,6 @@ public abstract class Weapon : MonoBehaviour
 		bulletsLeftInMagazine = weaponData.magazineCapacity;
 		SetState(WeaponStates.READY);
 		UpdateAmmoUI();
-	}
-
-	private void LateUpdate()
-	{
-		/* if (CanReload())
-		{
-			StartReload();
-		} */
 	}
 
 	public void Shoot()
@@ -157,9 +151,23 @@ public abstract class Weapon : MonoBehaviour
 		SetState(WeaponStates.READY);
 	}
 
+	private void UpdateAmmoUI(Item item)
+	{
+		if (ammoUI != null)
+		{
+			if (item.itemTypes == ItemTypes.Ammo)
+			{
+				ammoUI.UpdateWeaponAmmoUI(this, item);
+			}
+		}
+	}
+
 	private void UpdateAmmoUI()
 	{
-		Toolbox.instance.GetUIManager().WeaponAmmoUI.UpdateWeaponAmmoUI(this);
+		if (ammoUI != null)
+		{
+			ammoUI.UpdateWeaponAmmoUI(this);
+		}
 	}
 
 	public void SpawnBulletHole(List<RaycastHit> hitPoints)
@@ -275,7 +283,7 @@ public abstract class Weapon : MonoBehaviour
 
 	private void UpdateCyclingState()
 	{
-		if(!isCycling)
+		if (!isCycling)
 		{
 			SetState(WeaponStates.READY);
 		}

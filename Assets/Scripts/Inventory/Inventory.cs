@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class Inventory
 {
 	private Dictionary<Item, int> itemDict = new Dictionary<Item, int>();
 
 	//Events
-	public delegate void OnItemAddedAction();
+	public delegate void OnItemAddedAction(Item itemAdded);
 	public static event OnItemAddedAction OnItemAdded;
+
+	public Inventory()
+	{
+		Debug.Log("Inventory Initialized.");
+	}
 
 	public void AddItem(Item itemToAdd, int amountToAdd)
 	{
@@ -21,13 +26,19 @@ public class Inventory : MonoBehaviour
 			itemDict.Add(itemToAdd, amountToAdd);
 		}
 
-		if (itemToAdd.itemTypes == ItemTypes.Ammo)
+		if (OnItemAdded != null)
+		{
+			OnItemAdded.Invoke(itemToAdd);
+		}
+
+
+		/* if (itemToAdd.itemTypes == ItemTypes.Ammo)
 		{
 			if (OnItemAdded != null)
 			{
-				OnItemAdded.Invoke();
+				OnItemAdded.Invoke(item);
 			}
-		}
+		} */
 
 		Debug.Log("Added: " + amountToAdd + " of " + itemToAdd.itemName);
 	}

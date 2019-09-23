@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3131886055705291718}
   - component: {fileID: 7564926637646392833}
-  - component: {fileID: 8296172669040861518}
-  - component: {fileID: 8296172669040861519}
+  - component: {fileID: 4952764950263658581}
+  - component: {fileID: 5677632079985465765}
+  - component: {fileID: 6772860430052720708}
   - component: {fileID: 6920182350529000636}
   m_Layer: 0
   m_Name: Turret1
@@ -58,8 +59,8 @@ MonoBehaviour:
   firePoint: {fileID: 8235082101089957476}
   partToRotate: {fileID: 8228665108053891816}
   gun: {fileID: 6394465395266815412}
---- !u!65 &8296172669040861518
-BoxCollider:
+--- !u!135 &4952764950263658581
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -69,10 +70,10 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.767774, y: 0.76895034, z: 2.0126534}
-  m_Center: {x: -0.020331243, y: 2.61449, z: 1.4945204}
---- !u!65 &8296172669040861519
-BoxCollider:
+  m_Radius: 0.8099144
+  m_Center: {x: -0.0055340924, y: 2.6050463, z: -0.27}
+--- !u!136 &5677632079985465765
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -81,9 +82,24 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.8377035, y: 3.8291206, z: 1.7827415}
-  m_Center: {x: -0.028898517, y: 1.4145604, z: -0.1824204}
+  m_Radius: 0.6378547
+  m_Height: 3.4879305
+  m_Direction: 1
+  m_Center: {x: 0.014808972, y: 1.589511, z: -0.024743874}
+--- !u!136 &6772860430052720708
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2102591820302571989}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.47038156
+  m_Height: 2.4315467
+  m_Direction: 2
+  m_Center: {x: 0.014808972, y: 2.57185, z: 1.2785188}
 --- !u!95 &6920182350529000636
 Animator:
   serializedVersion: 3

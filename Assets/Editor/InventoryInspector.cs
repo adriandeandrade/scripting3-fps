@@ -11,7 +11,7 @@ public class InventoryInspector : Editor
 
     public override void OnInspectorGUI()
 	{
-		DrawDefaultInspector();
+		/* DrawDefaultInspector();
 
 		Inventory inventoryTarget = (Inventory)target;
 
@@ -26,6 +26,6 @@ public class InventoryInspector : Editor
 		if(GUILayout.Button("Print Inventory"))
 		{
 			inventoryTarget.PrintInventory();
-		}
+		} */
 	}
 }

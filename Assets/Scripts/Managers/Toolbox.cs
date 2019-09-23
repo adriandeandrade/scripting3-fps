@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[DefaultExecutionOrder(-1000)]
 public class Toolbox : MonoBehaviour
 {
 	#region Singleton
 	public static Toolbox instance;
 
-	private void InitializeSingelon()
+	private void InitializeSingleton()
 	{
 		if (instance == null)
 		{
@@ -26,17 +27,17 @@ public class Toolbox : MonoBehaviour
 
 	private InventoryManager inventoryManager;
 	private InputManager inputManager;
-	private UIManager uiManager;
 	private GameManager gameManager;
+	private WeaponManager weaponManager;
 
 	private void Awake()
 	{
-		InitializeSingelon();
+		InitializeSingleton();
 
 		inventoryManager = gameObject.AddComponent<InventoryManager>();
 		inputManager = gameObject.AddComponent<InputManager>();
-		uiManager = gameObject.AddComponent<UIManager>();
 		gameManager = gameObject.AddComponent<GameManager>();
+		weaponManager = gameObject.AddComponent<WeaponManager>();
 	}
 
 	public InventoryManager GetInventoryManager()
@@ -49,13 +50,13 @@ public class Toolbox : MonoBehaviour
 		return inputManager;
 	}
 
-	public UIManager GetUIManager()
-	{
-		return uiManager;
-	}
-
 	public GameManager GetGameManager()
 	{
 		return gameManager;
+	}
+
+	public WeaponManager GetWeaponManager()
+	{
+		return weaponManager;
 	}
 }

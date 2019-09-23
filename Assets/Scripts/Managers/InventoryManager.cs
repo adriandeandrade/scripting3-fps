@@ -13,21 +13,16 @@ public class InventoryManager : MonoBehaviour
 		SceneManager.sceneLoaded += UpdateInventoryManagerReferences;
 	}
 
-	private void Awake()
-	{
-		player = FindObjectOfType<Player>();
-		inventory = player.gameObject.AddComponent<Inventory>();
-	}
-
 	private void UpdateInventoryManagerReferences(Scene scene, LoadSceneMode mode)
 	{
-		player = FindObjectOfType<Player>();
-
-		if(player.GetComponent<Inventory>())
+		if (player == null)
 		{
-			inventory = player.GetComponent<Inventory>();
+			player = FindObjectOfType<Player>();
 		}
 
-		//inventory = player.gameObject.AddComponent<Inventory>();
+		if (inventory == null)
+		{
+			inventory = new Inventory();
+		}
 	}
 }
