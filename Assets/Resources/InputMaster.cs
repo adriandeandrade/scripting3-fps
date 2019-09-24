@@ -64,6 +64,14 @@ public class InputMaster : IInputActionCollection
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Use Healthpack"",
+                    ""type"": ""Button"",
+                    ""id"": ""3c41a717-ec62-4c5b-ac73-74f85c4088c7"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -242,6 +250,17 @@ public class InputMaster : IInputActionCollection
                     ""action"": ""Reload"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f9c0ed91-b11e-4331-8407-19b68934defa"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and Mouse"",
+                    ""action"": ""Use Healthpack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -284,6 +303,7 @@ public class InputMaster : IInputActionCollection
         m_Player_InventoryControls = m_Player.GetAction("Inventory Controls");
         m_Player_Jump = m_Player.GetAction("Jump");
         m_Player_Reload = m_Player.GetAction("Reload");
+        m_Player_UseHealthpack = m_Player.GetAction("Use Healthpack");
     }
 
     ~InputMaster()
@@ -339,6 +359,7 @@ public class InputMaster : IInputActionCollection
     private readonly InputAction m_Player_InventoryControls;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Reload;
+    private readonly InputAction m_Player_UseHealthpack;
     public struct PlayerActions
     {
         private InputMaster m_Wrapper;
@@ -349,6 +370,7 @@ public class InputMaster : IInputActionCollection
         public InputAction @InventoryControls => m_Wrapper.m_Player_InventoryControls;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
+        public InputAction @UseHealthpack => m_Wrapper.m_Player_UseHealthpack;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -376,6 +398,9 @@ public class InputMaster : IInputActionCollection
                 Reload.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReload;
                 Reload.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReload;
                 Reload.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReload;
+                UseHealthpack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseHealthpack;
+                UseHealthpack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseHealthpack;
+                UseHealthpack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUseHealthpack;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -398,6 +423,9 @@ public class InputMaster : IInputActionCollection
                 Reload.started += instance.OnReload;
                 Reload.performed += instance.OnReload;
                 Reload.canceled += instance.OnReload;
+                UseHealthpack.started += instance.OnUseHealthpack;
+                UseHealthpack.performed += instance.OnUseHealthpack;
+                UseHealthpack.canceled += instance.OnUseHealthpack;
             }
         }
     }
@@ -428,5 +456,6 @@ public class InputMaster : IInputActionCollection
         void OnInventoryControls(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
+        void OnUseHealthpack(InputAction.CallbackContext context);
     }
 }

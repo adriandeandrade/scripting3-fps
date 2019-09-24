@@ -9,6 +9,7 @@ public class Player : BaseDamageable
 	// Inspector Fields
 	[Header("Player Configuration")]
 	[SerializeField] private Image healthBar;
+	[SerializeField] private Item healthPackItem;
 
 	// Private Variables
 	private bool isReloading;
@@ -46,10 +47,17 @@ public class Player : BaseDamageable
 
 	protected override void Start()
 	{
+		InitializeInput();
+
 		base.Start();
-		
+		currentHealth = 5f;
 		weaponManager = Toolbox.instance.GetWeaponManager();
 		UpdateHealth();
+	}
+
+		private void InitializeInput()
+	{
+		Toolbox.instance.GetInputManager().useHealthpackControl.performed += UseHealthPack;
 	}
 
 	private void UpdateHealth()
@@ -59,6 +67,21 @@ public class Player : BaseDamageable
 		if (healthBar != null)
 		{
 			healthBar.fillAmount = currentHealth / startHealth;
+		}
+	}
+
+	public void AddHealth(float amountToAdd)
+	{
+		currentHealth += amountToAdd;
+		currentHealth = Mathf.Clamp (currentHealth, currentHealth, startHealth);
+		UpdateHealth();
+	}
+
+	public void UseHealthPack(InputAction.CallbackContext context)
+	{
+		if(Toolbox.instance.GetInventoryManager().inventory.UseItem(healthPackItem, 1))
+		{
+			AddHealth(5f);
 		}
 	}
 }

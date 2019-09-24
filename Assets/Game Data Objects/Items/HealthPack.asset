@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2a70901905e1624082b7a7c00ac972b, type: 3}
+  m_Name: HealthPack
+  m_EditorClassIdentifier: 
+  itemName: Healthpack
+  minStackSize: 1
+  itemTypes: 1
+  itemPrefab: {fileID: 9006866620524326178, guid: 97fab4f0734ce844f8505ef5293111dd,
+    type: 3}

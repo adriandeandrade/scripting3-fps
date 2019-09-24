@@ -15,6 +15,7 @@ public class InputManager : MonoBehaviour
 	public InputAction cycleWeaponControls;
 	public InputAction jumpControl;
 	public InputAction reloadControl;
+	public InputAction useHealthpackControl;
 
 	private void OnEnable()
 	{
@@ -24,6 +25,7 @@ public class InputManager : MonoBehaviour
 		cycleWeaponControls.Enable();
 		jumpControl.Enable();
 		reloadControl.Enable();
+		useHealthpackControl.Enable();
 	}
 
 	private void OnDisable()
@@ -34,6 +36,7 @@ public class InputManager : MonoBehaviour
 		cycleWeaponControls.Disable();
 		jumpControl.Disable();
 		reloadControl.Disable();
+		useHealthpackControl.Disable();
 	}
 
 	private void Awake()
@@ -52,5 +55,6 @@ public class InputManager : MonoBehaviour
 		cycleWeaponControls = playerActionMap.GetAction("Inventory Controls");
 		jumpControl = playerActionMap.GetAction("Jump");
 		reloadControl = playerActionMap.GetAction("Reload");
+		useHealthpackControl = playerActionMap.GetAction("Use Healthpack");
 	}
 }

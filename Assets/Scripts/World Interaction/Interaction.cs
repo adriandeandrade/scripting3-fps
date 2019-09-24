@@ -43,6 +43,7 @@ public class Interaction : MonoBehaviour
 				lastItemInteracted.Interact();
 				crosshairController.ShowCrosshair();
 				lastItemInteracted = null;
+				canInteract = false;
 			}
 		}
 	}
@@ -95,7 +96,7 @@ public class Interaction : MonoBehaviour
 
 	private float GetDistance(Vector3 objectPos)
 	{
-		return Vector3.Distance(transform.position, objectPos); ;
+		return Vector3.Distance(transform.position, objectPos);
 	}
 
 }
