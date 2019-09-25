@@ -35,7 +35,7 @@ public class Door : Interactable
 
 	private void Unlock()
 	{
-        partToRemoveWhenUnlocked.SetActive(false);
+        //partToRemoveWhenUnlocked.SetActive(false);
         unlocked = true;
 
 		if(OnUnlock != null)

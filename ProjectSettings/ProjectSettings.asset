@@ -576,7 +576,7 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLWasmStreaming: 0
   scriptingDefineSymbols:
-    1: RHSD
+    1: RHSD;AURA_IN_PROJECT
   platformArchitecture: {}
   scriptingBackend: {}
   il2cppCompilerConfiguration: {}

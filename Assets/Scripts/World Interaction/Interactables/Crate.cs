@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class Crate : Interactable
 {
+	[System.Serializable]
+	public struct CrateSlot
+	{
+		public Transform spawnPoint;
+		public bool hasItemInSlot;
+	}
+
 	// Inspector Field
 	[SerializeField] private List<Item> possibleItemSpawns;
-	[SerializeField] private List<Transform> possibleItemSpawnPoints;
+	[SerializeField] private CrateSlot[] crateSlots;
 
 	// Private Variables
 	private bool isOpen = false;
-	private Dictionary<Item, int> itemsInCrate = new Dictionary<Item, int>();
+	private CrateSlot targetSlot;
 
 	// Components
 	private Animator animator;
@@ -18,9 +25,8 @@ public class Crate : Interactable
 
 	private void Awake()
 	{
-		animator = GetComponent<Animator>();
+		animator = GetComponentInChildren<Animator>();
 		interactionCollider = GetComponent<Collider>();
-		SpawnItems();
 	}
 
 	public override void Interact()
@@ -33,36 +39,57 @@ public class Crate : Interactable
 
 	private void OpenCrate()
 	{
-		//SpawnItems();
 		animator.SetTrigger("Open");
 		isOpen = true;
 		interactionCollider.enabled = false;
-
-		foreach (KeyValuePair<Item, int> item in itemsInCrate)
-		{
-			Toolbox.instance.GetInventoryManager().inventory.AddItem(item.Key, item.Value);
-		}
-
-		itemsInCrate.Clear();
-
+		SpawnItems();
 	}
 
 	private void SpawnItems()
 	{
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < crateSlots.Length; i++)
 		{
-			int randomSpawnPointIndex = Random.Range(0, possibleItemSpawnPoints.Count);
 			int randomItemToSpawnIndex = Random.Range(0, possibleItemSpawns.Count);
 			Item itemSpawned = possibleItemSpawns[randomItemToSpawnIndex];
 
-			if (itemsInCrate.ContainsKey(itemSpawned))
+			GameObject itemObject = Instantiate(itemSpawned.itemPrefab, crateSlots[i].spawnPoint.position, Quaternion.identity);
+			itemObject.transform.parent = transform;
+		}
+	}
+
+	IEnumerator PickRandomCrateSlot()
+	{
+		while (true)
+		{
+			int randomCrateSlotIndex = Random.Range(0, crateSlots.Length);
+			if (crateSlots[randomCrateSlotIndex].hasItemInSlot)
 			{
-				itemsInCrate[itemSpawned] += itemSpawned.minStackSize;
+				yield return null;
 			}
 			else
 			{
-				itemsInCrate.Add(itemSpawned, itemSpawned.minStackSize);
+				CrateSlot slot = crateSlots[randomCrateSlotIndex];
+				slot.hasItemInSlot = true;
+
+				int randomItemToSpawnIndex = Random.Range(0, possibleItemSpawns.Count);
+				Item itemSpawned = possibleItemSpawns[randomItemToSpawnIndex];
+
+				GameObject itemObject = Instantiate(itemSpawned.itemPrefab, slot.spawnPoint.position, Quaternion.identity);
+
+				yield break;
 			}
+		}
+	}
+
+	private bool SlotIsEmpty(CrateSlot slotToCheck)
+	{
+		if (slotToCheck.hasItemInSlot)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
 		}
 	}
 }

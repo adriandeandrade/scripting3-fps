@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
         {
             //GameOver();
             Debug.Log("Game Over");
+            SceneManager.LoadScene(0);
             return;
         }
 
