@@ -25,7 +25,7 @@ public class Player : BaseDamageable
 	{
 		get
 		{
-			if(Toolbox.instance.GetWeaponManager())
+			if (Toolbox.instance.GetWeaponManager())
 			{
 				return Toolbox.instance.GetWeaponManager().CurrentWeapon;
 			}
@@ -47,7 +47,7 @@ public class Player : BaseDamageable
 	protected override void Start()
 	{
 		base.Start();
-		
+
 		weaponManager = Toolbox.instance.GetWeaponManager();
 		UpdateHealth();
 	}
@@ -60,5 +60,10 @@ public class Player : BaseDamageable
 		{
 			healthBar.fillAmount = currentHealth / startHealth;
 		}
+	}
+
+	public override void OnDeath()
+	{
+		Toolbox.instance.GetGameManager().GameOver();
 	}
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7564926637646392833}
   - component: {fileID: 6920182350529000636}
   m_Layer: 0
-  m_Name: Turret1
+  m_Name: prefab_Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,6 @@ Transform:
   m_Children:
   - {fileID: 6527808426563015671}
   - {fileID: 8228665108053891816}
-  - {fileID: 8856242943950098878}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -50,11 +49,11 @@ MonoBehaviour:
   startHealth: 100
   rotateSpeed: 80
   maxAttackDistance: 40
-  fireRate: 0.6
-  fireDelay: 0.2
+  fireRate: 0.9
+  fireDelay: 0.4
   firePoint: {fileID: 8235082101089957476}
   partToRotate: {fileID: 8228665108053891816}
-  gun: {fileID: 6394465395266815412}
+  gun: {fileID: 4706553496271890870}
   healthBar: {fileID: 5502566089071709050}
 --- !u!95 &6920182350529000636
 Animator:
@@ -380,15 +379,15 @@ RectTransform:
   m_GameObject: {fileID: 4054150718950797627}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.5}
+  m_LocalScale: {x: 0.099999994, y: 0.099999994, z: 0.49999997}
   m_Children:
   - {fileID: 7461681834122061682}
-  m_Father: {fileID: 3131886055705291718}
-  m_RootOrder: 2
+  m_Father: {fileID: 8228665108053891816}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 4.02}
+  m_AnchoredPosition: {x: 0, y: 4.0190115}
   m_SizeDelta: {x: 68.24, y: 3.33}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6895816995757130465
@@ -591,6 +590,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4706553496271890870}
+  - {fileID: 8856242943950098878}
   m_Father: {fileID: 3131886055705291718}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

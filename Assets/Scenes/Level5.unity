@@ -913,7 +913,7 @@ PrefabInstance:
     - target: {fileID: 3131886055705291718, guid: 30e900ba2709d9446b7b9fde01b89bed,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 19.5
+      value: 17.98
       objectReference: {fileID: 0}
     - target: {fileID: 3131886055705291718, guid: 30e900ba2709d9446b7b9fde01b89bed,
         type: 3}
@@ -1053,7 +1053,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 462f1fa455f89c74f8c79a45b137b3d3,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 12.1
+      value: 10.58
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 462f1fa455f89c74f8c79a45b137b3d3,
         type: 3}
@@ -1457,7 +1457,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 5.47e-43, y: -2.5396252, z: 5.47e-43, w: 3e-45}
+  m_BoundingSphereOverride: {x: 1.341e-42, y: 1.04e-43, z: 8.2e-43, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1712,7 +1712,7 @@ PrefabInstance:
     - target: {fileID: 3131886055705291718, guid: 30e900ba2709d9446b7b9fde01b89bed,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 21.07
+      value: 19.55
       objectReference: {fileID: 0}
     - target: {fileID: 3131886055705291718, guid: 30e900ba2709d9446b7b9fde01b89bed,
         type: 3}
@@ -1801,7 +1801,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 462f1fa455f89c74f8c79a45b137b3d3,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 13.65
+      value: 12.129999
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 462f1fa455f89c74f8c79a45b137b3d3,
         type: 3}
@@ -2046,6 +2046,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2899572778193331286, guid: e9b38c58ee03d384384a24bd07404b9e,
+        type: 3}
+      propertyPath: field of view
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 2899572778518650343, guid: e9b38c58ee03d384384a24bd07404b9e,
         type: 3}
@@ -2329,11 +2334,6 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: d4376532fd6dfa244b1af0a71881be6e, type: 2}
-    - target: {fileID: 2899572778193331286, guid: e9b38c58ee03d384384a24bd07404b9e,
-        type: 3}
-      propertyPath: field of view
-      value: 70
-      objectReference: {fileID: 0}
     - target: {fileID: 772353328, guid: e9b38c58ee03d384384a24bd07404b9e, type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25

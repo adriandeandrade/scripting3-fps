@@ -190,7 +190,7 @@ public class Turret1 : BaseDamageable
 	private void RotateTurret()
 	{
 		Vector3 directionToTarget = target.transform.position - partToRotate.transform.position;
-		directionToTarget.y = partToRotate.transform.position.y;
+		directionToTarget.y = partToRotate.transform.localPosition.y;
 		Quaternion desiredRot = Quaternion.LookRotation(directionToTarget, Vector3.up);
 		partToRotate.localRotation = Quaternion.RotateTowards(partToRotate.localRotation, desiredRot, rotateSpeed * Time.deltaTime);
 	}

@@ -31,8 +31,9 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(nextScene);
     }
 
-    private void GameOver()
+    public void GameOver()
     {
-
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentScene);
     }
 }
